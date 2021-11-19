@@ -54,11 +54,10 @@ when predicting IMDb rating.
 
 To replicate the analysis, all relevant scripts will be made available in this 
 GitHub repository. All necessarily dependencies will be provided and commands
-required to fetch the relevant data will be provided as follow. Please run 
-the following commands at the command line/terminal from the root directory of 
-this project after cloning the GitHub repository to your machine.
+required to fetch the relevant data will be provided as follow. 
 
-Script to download IMDb dataset:
+Please run the following commands at the command line/terminal from the root directory of 
+this project after cloning the GitHub repository to your machine:
 
     python src/downloader.py https://datasets.imdbws.com/name.basics.tsv.gz data/raw
     python src/downloader.py https://datasets.imdbws.com/title.akas.tsv.gz data/raw
