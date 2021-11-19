@@ -59,13 +59,13 @@ the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository to your machine.
 
 Script to download IMDb dataset:
-python src/downloader.py https://datasets.imdbws.com/name.basics.tsv.gz data/raw
-python src/downloader.py https://datasets.imdbws.com/title.akas.tsv.gz data/raw
-python src/downloader.py https://datasets.imdbws.com/title.basics.tsv.gz data/raw
-python src/downloader.py https://datasets.imdbws.com/title.crew.tsv.gz data/raw
-python src/downloader.py https://datasets.imdbws.com/title.episode.tsv.gz data/raw
-python src/downloader.py https://datasets.imdbws.com/title.principals.tsv.gz data/raw
-python src/downloader.py https://datasets.imdbws.com/title.ratings.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/name.basics.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/title.akas.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/title.basics.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/title.crew.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/title.episode.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/title.principals.tsv.gz data/raw
+    python src/downloader.py https://datasets.imdbws.com/title.ratings.tsv.gz data/raw
 
 ## Dependencies
 	
