@@ -8,38 +8,37 @@ British Columbia.
 
 ## Introduction
 
-For this project we are trying to build a binary classifier to predict if a 
-banking customer will subscribe (Y) to a new product (bank term deposit) if 
-they are contacted by the bank with phone call. This model would help banking 
-institution to optimize marketing strategies and budget allocation to achieve 
-a higher new product subscription rate. If chosen a appropriate model for the 
-binary classifier, we can explore the different attributes of the type of 
-customers who will likely to subscribe the new product when contacted over the 
-phone. 
+For this project we are trying to build a binary classifier to predict if a
+banking customer will subscribe (Y) to a new product (bank term deposit) if
+they are contacted by the bank with a phone call. This model would help banking
+institution to optimize marketing strategies and budget allocation to achieve
+a higher new product subscription rate. If choosing an appropriate model for the
+binary classifier, we can explore the different attributes of the type of
+customers who will likely subscribe to the new product when contacted over the phone.
 
-To answer the predictive question posed above, we plan to first conduct a 
-series of exploratory data analysis to assess the relationship between subscribe
-status against other available attributes in the dataset. We will examine the 
-variable distributions using summary tables and some data visualization. 
+To answer the predictive question posed above, we plan to first conduct a
+series of exploratory data analyses to assess the relationship between subscribing
+status against other available attributes in the dataset. We will examine the
+variable distributions using summary tables and some data visualization.
 
-For the model building process, the Bank data will be partition into training and 
-testing set (split 80%:20%). The binary predictive model we will be exploring are 
-varies type of regression models such as logistic linear regression, k-nn regression, 
-random forest regression and/or decision tree algorithms. The model will be exammine 
-based on overall accuracy on the training data and using cross-validation method to
-for hyper-parameter tuning. Metrics such as recall rate, precisions and confusion 
-matrix is assessed. After selecting the final model, we will re-fit the model on the 
-whole training dataset, as well as evaluate it's performance and make prediction and
-assess the over performance of the final model using the testing dataset. Summary 
-statistics and appropriate visualization as well as the whole model building process 
+For the model building process, the Bank data will be partitioned into training and
+testing sets (split 80%:20%). The binary predictive models we will be exploring are
+various types of regression models such as logistic linear regression, k-NN regression,
+random forest regression and/or decision tree algorithms. The model will be examined
+based on the overall accuracy on the training data and using cross-validation method 
+for hyper-parameter tuning. Metrics such as recall rate, precisions and confusion
+matrix are assessed. After selecting the final model, we will re-fit the model on the
+whole training dataset, as well as evaluate its performance, make predictions and
+assess the overperformance of the final model using the testing dataset. Summary
+statistics and appropriate visualization as well as the whole model building process
 will be provided and included as part of the final report for this project.
 
 ## Usage
 
-To replicate the analysis, all relevant scripts will be made available in this 
-GitHub repository. All necessarily dependencies will be provided and commands
-required to fetch the relevant data will be provided as follow. Please run 
-the following commands at the command line/terminal from the root directory of 
+To replicate the analysis, all relevant scripts will be made available in this
+GitHub repository. All necessary dependencies will be provided and commands
+required to fetch the relevant data will be provided as follow. Please run
+the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository to your machine.
 
 Script to download IMDb dataset:
