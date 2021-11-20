@@ -8,13 +8,14 @@ British Columbia.
 
 ## Introduction
 
-For this project we are trying to build prediction model on the likelihood of a 
-banking customer to subscribe to a new product (bank term deposit) if they were 
-to be contacted over phone calls. This model would help banking institution to 
-optimize marketing strategies and budget allocation for to achieve a higher 
-new product subscription rate. With a appropriate model chosen like regression 
-type models, we can explore the different attributes of the type of customers who 
-will likely to subscribe the new product when contacted over the phone. 
+For this project we are trying to build a binary classifier to predict if a 
+banking customer will subscribe (Y) to a new product (bank term deposit) if 
+they are contacted by the bank with phone call. This model would help banking 
+institution to optimize marketing strategies and budget allocation to achieve 
+a higher new product subscription rate. If chosen a appropriate model for the 
+binary classifier, we can explore the different attributes of the type of 
+customers who will likely to subscribe the new product when contacted over the 
+phone. 
 
 To answer the predictive question posed above, we plan to first conduct a 
 series of exploratory data analysis to assess the relationship between subscribe
@@ -42,7 +43,12 @@ the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository to your machine.
 
 Script to download IMDb dataset:
-    python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip data/raw
+
+    python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip --path=data/raw
+	
+After file download run the following to process dataset (for a 80%/20% train/test split):
+
+    python src/data_preprocessing.py --test_split=0.2
 
 ## Dependencies
 	
@@ -57,6 +63,8 @@ Script to download IMDb dataset:
 		- pip
 		- wikipedia
 		- seaborn
+		- errno
+		- zipfile
 
 ## License
 
@@ -69,4 +77,5 @@ under the MIT License found [here](https://github.com/stevenlio88/IMDB_Rating_Pr
 ## References
 
 This dataset is public available for research. The details are described in [Moro et al., 2014]
+
 [Moro et al., 2014] S. Moro, P. Cortez and P. Rita. A Data-Driven Approach to Predict the Success of Bank Telemarketing. Decision Support Systems, Elsevier, 62:22-31, June 2014
