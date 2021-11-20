@@ -11,8 +11,8 @@ British Columbia.
 For this project we are trying to build a binary classifier to predict if a
 banking customer will subscribe (Y) to a new product (bank term deposit) if
 they are contacted by the bank with a phone call. This model would help banking
-institution to optimize marketing strategies and budget allocation to achiev
-e a higher new product subscription rate. If choosing an appropriate model for the
+institution to optimize marketing strategies and budget allocation to achieve
+a higher new product subscription rate. If choosing an appropriate model for the
 binary classifier, we can explore the different attributes of the type of
 customers who will likely subscribe to the new product when contacted over the phone.
 
