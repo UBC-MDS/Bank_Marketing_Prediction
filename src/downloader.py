@@ -1,8 +1,9 @@
 # author: Melisa Maidana, Steven Lio, Zheren Xu
-# date: 2021-11-18
+# date: 2021-11-19
 
-'''This script downloads .tsv.gz format data set from given URL and writes it to local.
-This script takes a URL and a local file path.
+'''This script downloads zip data from given URL, writes both zipped and 
+unzipped it to local directory.
+This script takes a URL arg and an optional local directory path arg.
 
 Usage: downloader.py <url> [--path=PATH]
 
@@ -30,6 +31,10 @@ def main(url, path):
         output_file.write(r.content)
  
     print('Download Completed!!!')
+
+    with zipfile.ZipFile(filename, 'r') as zip_ref:
+        zip_ref.extractall(path)
+    print('Unzip Completed!!!')
 
 
 def mkdir_p(path):
