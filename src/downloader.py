@@ -13,11 +13,15 @@ Options:
 
 import pandas as pd
 import numpy as np
+import os, os.path
+import errno
 from docopt import docopt
 
 opt = docopt(__doc__)
 
 def main(url, path):
+    os.makedirs(path)
+
     file_name = url.split('/')[-1].split('.gz')[0]
     df = pd.read_csv(url, sep='\t')
     df.to_csv(path+'/'+file_name, sep = '\t', index=False)
