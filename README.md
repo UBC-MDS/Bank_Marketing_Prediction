@@ -59,7 +59,6 @@ After file download run the following to process dataset (for a 80%/20% train/te
 		- pandas>=1.3.*
 		- scikit-learn>=1.0
 		- altair
-		- pip
 		- wikipedia
 		- seaborn
 		- errno
