@@ -13,7 +13,7 @@ Options:
 --random_state=[<random_state>]                 Integer value for the random state seed
 
 Example:
-python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data\processed --test_split=0.2
+python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 '''
 
 import pandas as pd
@@ -43,7 +43,7 @@ def main(path, dest, test_split, random_state):
         test_df.to_csv(dest + 'bank-additional-test.csv', index=False)
         
         if os.path.isfile(dest + 'bank-additional-train.csv') and os.path.isfile(dest + 'bank-additional-test.csv'):
-            print('train and test data created successfully. Files are in /data/src')
+            print(f'train and test data created successfully. Files are in {dest}')
         
     else:
         print(f'{path} file does not exist, please run downloader.py to download the file.')

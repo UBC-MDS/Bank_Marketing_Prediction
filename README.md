@@ -47,7 +47,7 @@ Script to download IMDb dataset:
 	
 After file download run the following to process dataset (for a 80%/20% train/test split):
 
-    python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data\processed --test_split=0.2
+    python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
 ## Dependencies
 	
