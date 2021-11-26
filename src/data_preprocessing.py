@@ -36,13 +36,23 @@ def main(path, dest, test_split, random_state):
             random_state = 123
             print('random state not set, default value 123.')
         
-        bank_df = pd.read_csv(path, sep=';')
-        train_df, test_df = train_test_split(bank_df, test_size = float(test_split), random_state = int(random_state))
+        #Read raw data file
+        df = pd.read_csv(path, sep=';')
         
-        train_df.to_csv(dest + 'bank-additional-train.csv', index=False)
-        test_df.to_csv(dest + 'bank-additional-test.csv', index=False)
+        #Split train and test data based on input split size and random state
+        train_df, test_df = train_test_split(df, test_size = float(test_split), random_state = int(random_state))
         
-        if os.path.isfile(dest + 'bank-additional-train.csv') and os.path.isfile(dest + 'bank-additional-test.csv'):
+        #Transform target variable into Yes=1 ; No=0
+        train_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
+        test_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
+        
+        train_path = dest + '/' + path.split('/')[-1].replace(".csv","-train.csv").replace("-full","")
+        test_path = dest + '/' + path.split('/')[-1].replace(".csv","-test.csv").replace("-full","")
+        
+        train_df.to_csv(train_path, index=False) #bank-additional-train.csv
+        test_df.to_csv(test_path, index=False) #bank-additional-test.csv'
+        
+        if os.path.isfile(train_path) and os.path.isfile(test_path):
             print(f'train and test data created successfully. Files are in {dest}')
         
     else:
