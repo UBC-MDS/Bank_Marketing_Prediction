@@ -20,44 +20,41 @@ from get_valid_score import mean_std_cross_val_scores
 # import numpy as np
 import pandas as pd
 # from scipy.stats import loguniform
-from sklearn.pipeline import Pipeline, make_pipeline
+from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.compose import make_column_transformer
-from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
 from docopt import docopt
-# from sklearn.metrics import make_scorer
-# from sklearn.model_selection import cross_validate
+from sklearn.metrics import make_scorer
+from sklearn.model_selection import cross_validate
 opt = docopt(__doc__)
 
 def main(train_data, test_data, dest):
-    print(train_data)
-    print(test_data)
-    print(dest)
-    # # Split X and y
-    # train_df = pd.read_csv("processedbank-additional-train.csv")
-    # test_df = pd.read_csv("processedbank-additional-test.csv")
-    # X_train, y_train = train_df.drop(columns=["y"]), train_df["y"]
-    # X_test, y_test = test_df.drop(columns=["y"]), test_df["y"]
+    # Split X and y
+    train_df = pd.read_csv(train_data)
+    test_df = pd.read_csv(test_data)
+    X_train, y_train = train_df.drop(columns=["y"]), train_df["y"]
+    X_test, y_test = test_df.drop(columns=["y"]), test_df["y"]
 
-    # # Cross-Validation
-    # pipe = bulid_pipeline()
-    # results={}
-    # results["logistic regression"] = mean_std_cross_val_scores(
-    #     pipe, X_train, y_train, cv=2, return_train_score=True
-    # )
+    # Cross-Validation
+    pipe = bulid_pipeline()
+    results={}
+    results["logistic regression"] = mean_std_cross_val_scores(
+        pipe, X_train, y_train, cv=2, return_train_score=True
+    )
 
-    # # Testing
-    # pipe.fit(X_train, y_train)
-    # accuracy = round(pipe.score(X_test, y_test), 3)
-    # results = results['logistic regression'].append(pd.Series(accuracy, index=["test_score"]))
-    # result_df = pd.DataFrame(results)
-    # result_df["score"] = ["fit_time", "score_time", "valid_score", "train_score", "test_score"]
-    # result_df = result_df.rename(columns={0:"Logistic Regression"})
-    # result_df = result_df[['score', 'Logistic Regression']]
+    # Testing
+    pipe.fit(X_train, y_train)
+    accuracy = round(pipe.score(X_test, y_test), 3)
+    results = results['logistic regression'].append(pd.Series(accuracy, index=["test_score"]))
+    result_df = pd.DataFrame(results)
+    result_df["score"] = ["fit_time", "score_time", "valid_score", "train_score", "test_score"]
+    result_df = result_df.rename(columns={0:"Logistic Regression"})
+    result_df = result_df[['score', 'Logistic Regression']]
 
-    # # Save the result as a csv file
-    # result_df.to_csv("logistic_regression_result.csv", index=False)
+    # Save the result as a csv file
+    result_df.to_csv("logistic_regression_result.csv", index=False)
 
 
 def bulid_pipeline():
@@ -99,7 +96,7 @@ def bulid_pipeline():
         (numeric_transformer, numeric_features),
         (categorical_transformer, categorical_features)
     )
-    pipe = make_pipeline(
+    return make_pipeline(
         preprocessor, LogisticRegression(max_iter=1000, random_state=123, C=27.655298)
     )
 
