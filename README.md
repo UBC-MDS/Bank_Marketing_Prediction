@@ -49,7 +49,7 @@ this project after cloning the GitHub repository to your machine.
 
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
-#### 3\. Scrtip to build model (Dummy Classifier, Random Forest, Logistics Regression):
+#### 3\. Script to build model (Dummy Classifier, Random Forest, Logistics Regression):
 
     python src/Build_Models.py data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv results
 
