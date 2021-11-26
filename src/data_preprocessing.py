@@ -39,8 +39,11 @@ def main(path, dest, test_split, random_state):
         bank_df = pd.read_csv(path, sep=';')
         train_df, test_df = train_test_split(bank_df, test_size = float(test_split), random_state = int(random_state))
         
-        train_df.to_csv(dest + 'bank-additional-train.csv', index=False)
-        test_df.to_csv(dest + 'bank-additional-test.csv', index=False)
+        train_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
+        test_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
+        
+        train_df.to_csv(dest + '/bank-additional-train.csv', index=False)
+        test_df.to_csv(dest + '/bank-additional-test.csv', index=False)
         
         if os.path.isfile(dest + 'bank-additional-train.csv') and os.path.isfile(dest + 'bank-additional-test.csv'):
             print(f'train and test data created successfully. Files are in {dest}')
