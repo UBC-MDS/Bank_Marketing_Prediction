@@ -49,6 +49,10 @@ After file download run the following to process dataset (for a 80%/20% train/te
 
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
+Training with logistic regression model:
+
+	python src/logistic_regression.py data/processed/processedbank-additional-test.csv data/processed/processedbank-additional-train.csv results
+
 ## Dependencies
 	
 	- Python 3.9.0 and Python packages:
