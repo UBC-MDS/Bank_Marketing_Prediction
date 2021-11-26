@@ -1,16 +1,15 @@
 # author: Melisa Maidana, Steven Lio, Zheren Xu
 # date: 2021-11-25
 
-""""Creates eda plots for the pre-processed training data from the Bank Marketing Predicion project 
+""""Creates eda plot for the pre-processed training data from the Bank Marketing Predicion project 
 (from http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
 Saves the plots as a png file.
 Usage: eda_barchart.py <train> <out_filepath>
 
 
 Options:
-  <train>     pd.DataFrame with training data set (this is a required option)
-  <out_filepath>     The directory and filename where output file will be saved
- (this is a required option)
+  <train>           The directory and filename where the training data set is located. Must be a .csv file.
+  <out_filepath>    The directory and filename where output file will be saved. Must be a .png file.
 """ 
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -49,12 +48,12 @@ def barchart_by_marital(df, path):
 
 def main(data, path):
     """
-    Saves barchart figure in <out_filepath>
+    Creates a barchart  figure with <data> and saves it in <out_filepath>
 
     Parameters
     ----------
-    df : pd.DataFrame
-        data
+    data : string
+        the directory and filename where output file will be saved
     path : string
         the directory and filename where the figure will be saved
 
