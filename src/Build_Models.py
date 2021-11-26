@@ -163,7 +163,7 @@ def main(train_data, test_data, dest):
            'mean_test_recall', 'std_test_recall','rank_test_recall', 
            'mean_test_precision','std_test_precision', 'rank_test_precision',
     ]].set_index("rank_test_f1").sort_index()
-    best_RFC_CV_results.to_csv(dest+"/DummyClassifier_result.csv")
+    best_RFC_CV_results.to_csv(dest+"/RandomForestClassifier_result.csv")
 
     print('Refit on full Train dataset')
     best_RFC_params = {key.replace('RFC__',''):val for (key, val) in random_search_RFC.best_params_.items()}
