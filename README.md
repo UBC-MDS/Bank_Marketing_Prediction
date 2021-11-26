@@ -41,7 +41,7 @@ required to fetch the relevant data will be provided as follow. Please run
 the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository to your machine.
 
-Script to download IMDb dataset:
+Script to download Banking dataset:
 
     python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip --path=data/raw
 	
