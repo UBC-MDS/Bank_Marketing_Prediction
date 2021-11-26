@@ -41,15 +41,15 @@ required to fetch the relevant data will be provided as follow. Please run
 the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository to your machine.
 
-1. Script to download IMDb dataset:
+#### 1\. Script to download IMDb dataset:
 
     python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip --path=data/raw
 	
-2. After file download run the following to process dataset (for a 80%/20% train/test split):
+#### 2\. After file download run the following to process dataset (for a 80%/20% train/test split):
 
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
-3. Scrtip to build model (Dummy Classifier, Random Forest, Logistics Regression):
+#### 3\. Scrtip to build model (Dummy Classifier, Random Forest, Logistics Regression):
 
     python src/Build_Models.py data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv results
 
