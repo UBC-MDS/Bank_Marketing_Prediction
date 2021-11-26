@@ -51,7 +51,7 @@ this project after cloning the GitHub repository to your machine.
 
 3. Scrtip to build model (Dummy Classifier, Random Forest, Logistics Regression):
 
-	python src/Build_Models.py data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv results
+    python src/Build_Models.py data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv results
 
 ## Dependencies
 	
