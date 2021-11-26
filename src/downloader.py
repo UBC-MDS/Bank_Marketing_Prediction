@@ -12,8 +12,6 @@ Options:
 --path=PATH                 Write path (Optional) [default: Current]
 '''
 
-import pandas as pd
-import numpy as np
 import os, os.path
 import errno
 import requests
