@@ -49,9 +49,17 @@ After file download run the following to process dataset (for a 80%/20% train/te
 
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
+Generate EDA boxplot figure:
+
+    python src/eda_boxplot.py data/processed/processedbank-additional-train.csv results/boxplot_target_vs_age.png
+
+Generate EDA barchart figure:
+
+    python src/eda_barchart.py data/processed/processedbank-additional-train.csv results/barchart_by_marital.png
+
 Training with logistic regression model:
 
-	python src/logistic_regression.py data/processed/processedbank-additional-test.csv data/processed/processedbank-additional-train.csv results
+    python src/logistic_regression.py data/processed/processedbank-additional-test.csv data/processed/processedbank-additional-train.csv results
 
 ## Dependencies
 	
@@ -67,6 +75,8 @@ Training with logistic regression model:
 		- seaborn
 		- errno
 		- zipfile
+		- altair_saver
+		- vega-lite vega-cli canvas
 
 ## License
 
