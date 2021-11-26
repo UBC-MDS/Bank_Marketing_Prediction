@@ -23,8 +23,8 @@ variable distributions using summary tables and some data visualization.
 
 For the model building process, the Bank data will be partitioned into training and
 testing sets (split 80%:20%). The binary predictive models we will be exploring are
-various types of regression models such as logistic linear regression, k-NN regression,
-random forest regression and/or decision tree algorithms. The model will be examined
+[Logistic Linear Regression](https://en.wikipedia.org/wiki/Logistic_regression) and 
+[Random Forest Classifier](https://en.wikipedia.org/wiki/Random_forest). The model will be examined
 based on the overall accuracy on the training data and using cross-validation method 
 for hyper-parameter tuning. Metrics such as recall rate, precisions and confusion
 matrix are assessed. After selecting the final model, we will re-fit the model on the
@@ -41,17 +41,17 @@ required to fetch the relevant data will be provided as follow. Please run
 the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository to your machine.
 
-Script to download IMDb dataset:
+1. Script to download IMDb dataset:
 
     python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip --path=data/raw
 	
-After file download run the following to process dataset (for a 80%/20% train/test split):
+2. After file download run the following to process dataset (for a 80%/20% train/test split):
 
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
-Training with logistic regression model:
+3. Scrtip to build model (Dummy Classifier, Random Forest, Logistics Regression):
 
-	python src/logistic_regression.py data/processed/processedbank-additional-test.csv data/processed/processedbank-additional-train.csv results
+	python src/Build_Models.py data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv results
 
 ## Dependencies
 	

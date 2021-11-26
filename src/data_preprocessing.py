@@ -36,9 +36,13 @@ def main(path, dest, test_split, random_state):
             random_state = 123
             print('random state not set, default value 123.')
         
-        bank_df = pd.read_csv(path, sep=';')
-        train_df, test_df = train_test_split(bank_df, test_size = float(test_split), random_state = int(random_state))
+        #Read raw data file
+        df = pd.read_csv(path, sep=';')
         
+        #Split train and test data based on input split size and random state
+        train_df, test_df = train_test_split(df, test_size = float(test_split), random_state = int(random_state))
+        
+        #Transform target variable into Yes=1 ; No=0
         train_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
         test_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
         
