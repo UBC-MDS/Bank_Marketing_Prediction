@@ -42,10 +42,10 @@ def main(path, dest, test_split, random_state):
         train_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
         test_df['y'].replace(to_replace=["no","yes"], value=[0,1], inplace=True)
         
-        train_df.to_csv(dest + '/bank-additional-train.csv', index=False)
-        test_df.to_csv(dest + '/bank-additional-test.csv', index=False)
+        train_df.to_csv(dest + '/' + '/' + path.split('/')[-1].replace(".csv","-train.csv").replace("-full",""), index=False) #bank-additional-train.csv
+        test_df.to_csv(dest + '/' + '/' + path.split('/')[-1].replace(".csv","-test.csv").replace("-full",""), index=False) #bank-additional-test.csv'
         
-        if os.path.isfile(dest + 'bank-additional-train.csv') and os.path.isfile(dest + 'bank-additional-test.csv'):
+        if os.path.isfile(dest + '/' + '/' + path.split('/')[-1].replace(".csv","-train.csv").replace("-full","")) and os.path.isfile(dest + '/' + '/' + path.split('/')[-1].replace(".csv","-test.csv").replace("-full","")):
             print(f'train and test data created successfully. Files are in {dest}')
         
     else:
