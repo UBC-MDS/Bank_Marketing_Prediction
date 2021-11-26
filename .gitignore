@@ -1,2 +1,6 @@
 *.zip
 ./data/
+.DS_Store
+.DS_Store?
+.Rhistory
+__MACOSX
