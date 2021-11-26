@@ -22,6 +22,7 @@ import os, os.path
 import errno
 
 import pickle
+from scipy.stats import loguniform
 from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import (
@@ -226,7 +227,7 @@ def main(train_data, test_data, dest):
 
     print('Randomized Search CV for Logistics Regression')
     param_grid = { 
-        'LR__C' : np.linspace(1,50,100),
+        'LR__C' : loguniform(1e-3, 50),
         'LR__class_weight' : ["balanced", None],
     }
 
@@ -237,6 +238,7 @@ def main(train_data, test_data, dest):
 
     random_search_LR = RandomizedSearchCV(estimator=pipe_lr,
                                            param_distributions=param_grid,
+                                           n_iter = 100,
                                            n_jobs = -1,
                                            random_state = 123,
                                            return_train_score = True,
@@ -246,7 +248,7 @@ def main(train_data, test_data, dest):
     random_search_LR.fit(X_train, y_train);
 
     # Save C vs Accuracy plot
-    search_df = pd.DataFrame(random_search_LR.cv_results_).sort_values(by="param_LR__C", ascending=True)
+    search_df = pd.DataFrame(random_search_LR.cv_results_).query("param_LR__class_weight=='balanced'").sort_values(by="param_LR__C", ascending=True)
     plt.plot(search_df["param_LR__C"], search_df["mean_test_accuracy"], label="validation")
     plt.plot(search_df["param_LR__C"], search_df["mean_train_accuracy"], label="train")
     plt.legend()
