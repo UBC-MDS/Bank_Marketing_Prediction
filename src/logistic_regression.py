@@ -4,6 +4,7 @@
 '''This script builds a logistic regression model for bank marketing dataset to predict if 
 a banking customer will subscribe to a new product (bank term deposit) if they are contacted 
 by the bank with a phone call.
+The model will return a table with the best score, a C vs Accuracy plot and a model file.
 
 Usage: logistic_regression_model.py <train_src> <test_src> <dest>
 
@@ -20,7 +21,11 @@ from sklearn.impute import SimpleImputer
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import RandomizedSearchCV
+from scipy.stats import loguniform
 from docopt import docopt
+import matplotlib.pyplot as plt
+import pickle
 import os, os.path
 import errno
 
@@ -34,11 +39,17 @@ def main(train_data, test_data, dest):
     X_train, y_train = train_df.drop(columns=["y"]), train_df["y"]
     X_test, y_test = test_df.drop(columns=["y"]), test_df["y"]
 
+    tuned_pipe = bulid_pipeline(1000, 123, 1)
+    search_df = log_reg_C_tunning(tuned_pipe, X_train, y_train)
+    search_df = search_df.sort_values(by="rank_test_score", ascending=True)
+    result_df = search_df.loc[search_df.mean_test_score == search_df.mean_test_score.max(), 'param_logisticregression__C']
+    best_C = result_df.iloc[0]
+
     # Cross-Validation
-    pipe = bulid_pipeline()
+    pipe = bulid_pipeline(1000, 123, best_C)
     results={}
     results["logistic regression"] = mean_std_cross_val_scores(
-        pipe, X_train, y_train, cv=2, return_train_score=True
+        pipe, X_train, y_train, cv=10, return_train_score=True
     )
 
     # Testing
@@ -53,8 +64,44 @@ def main(train_data, test_data, dest):
     # Save the result as a csv file
     result_df.to_csv(dest+"/logistic_regression_result.csv", index=False)
 
+    # Save C vs Accuracy plot
+    search_df = search_df.sort_values(by="param_logisticregression__C", ascending=True)
+    plt.plot(search_df["param_logisticregression__C"], search_df["mean_test_score"], label="validation")
+    plt.plot(search_df["param_logisticregression__C"], search_df["mean_train_score"], label="train")
+    plt.legend()
+    plt.xlabel("C")
+    plt.ylabel("Accuracy")
+    plt.title('Logistic Regression C vs Accuracy')
+    plt.savefig(dest+'/Log_Reg_C_vs_Accuracy.png')
 
-def bulid_pipeline():
+    # Save model
+    pickle.dump(pipe, open(dest+"/log_reg.rds", "wb"))
+
+def log_reg_C_tunning(model, X_train, y_train, random_state=123):
+    param_dist = {
+        "logisticregression__C": loguniform(1e-3, 50)
+    }
+    search = RandomizedSearchCV(
+        model,
+        param_dist,
+        verbose=1,
+        n_jobs=-1,
+        n_iter=50,
+        return_train_score=True,
+        random_state=random_state,
+    )
+
+    search.fit(X_train, y_train)
+    return pd.DataFrame(search.cv_results_)[
+        [
+            "rank_test_score",
+            "mean_test_score",
+            "mean_train_score",
+            "param_logisticregression__C"
+        ]
+    ]
+
+def bulid_pipeline(max_iter, random_state, C):
     categorical_features = [
         "job",
         "marital",
@@ -94,7 +141,7 @@ def bulid_pipeline():
         (categorical_transformer, categorical_features)
     )
     return make_pipeline(
-        preprocessor, LogisticRegression(max_iter=1000, random_state=123, C=27.655298)
+        preprocessor, LogisticRegression(max_iter=max_iter, random_state=random_state, C=C)
     )
 
 def mkdir_p(path):
