@@ -1,4 +1,4 @@
-# author: Melisa Maidana
+# author: Melisa Maidana, Steven Lio, Zheren Xu
 # date: 2021-11-25
 
 """"Creates eda plots for the pre-processed training data from the Bank Marketing Predicion project 
