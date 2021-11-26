@@ -21,6 +21,7 @@ from docopt import docopt
 import os, os.path
 import errno
 
+import pickle
 from sklearn.compose import ColumnTransformer, make_column_transformer
 from sklearn.dummy import DummyClassifier
 from sklearn.metrics import (
@@ -47,11 +48,14 @@ from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
+from sklearn.metrics import PrecisionRecallDisplay
+from sklearn.metrics import roc_curve, auc
+
 from plot_confusion_matrix import plot_confusion_mat
 from get_valid_score import mean_std_cross_val_scores
 
 import warnings
-warnings.filterwarnings("ignore")
+warnings.filterwarnings('ignore')
 
 opt = docopt(__doc__)
 
@@ -118,9 +122,10 @@ def main(train_data, test_data, dest):
     result_df.to_csv(dest+"/DummyClassifier_result.csv")
 
     y_pred = cross_val_predict(pipe_dummy, X_train, y_train, cv=5)
-    dummy_con_mat = plot_confusion_mat(y_train, y_pred, 'Dummy Classifier').get_figure()
-    dummy_con_mat.savefig(dest+"/DummyClassifier_ConMat.jpg")
-
+    plot_confusion_mat(y_train, y_pred, 'Dummy Classifier').get_figure()
+    plt.savefig(dest+"/DummyClassifier_ConMat.jpg")
+    plt.clf();
+    
     print('Randomized Search CV for Random Forest Classifier')
     param_grid = { 
         'RFC__max_features' : ["auto", "sqrt", "log2"],
@@ -163,7 +168,7 @@ def main(train_data, test_data, dest):
            'mean_test_recall', 'std_test_recall','rank_test_recall', 
            'mean_test_precision','std_test_precision', 'rank_test_precision',
     ]].set_index("rank_test_f1").sort_index()
-    best_RFC_CV_results.to_csv(dest+"/RandomForestClassifier_result.csv")
+    best_RFC_CV_results.to_csv(dest+"/DummyClassifier_result.csv")
 
     print('Refit on full Train dataset')
     best_RFC_params = {key.replace('RFC__',''):val for (key, val) in random_search_RFC.best_params_.items()}
@@ -177,14 +182,45 @@ def main(train_data, test_data, dest):
 
     best_RFC.fit(X_train, y_train)
 
+    print('Output Confusion Matrix')
     y_pred = best_RFC.predict(X_train)
     best_RFC_train_con_mat = plot_confusion_mat(y_train, y_pred,'Random Forest on Train Data').get_figure()
     best_RFC_train_con_mat.savefig(dest+"/BestRandomForest_ConMat_Train.jpg")
+    plt.clf();
 
     y_pred = best_RFC.predict(X_test)
     best_RFC_test_con_mat = plot_confusion_mat(y_test, y_pred,'Random Forest on Test Data').get_figure()
     best_RFC_test_con_mat.savefig(dest+"/BestRandomForest_ConMat_Test.jpg")
+    plt.clf();
+    
+    print('Output Precision and ROC curves')
+    PrecisionRecallDisplay.from_estimator(best_RFC, X_test, y_test)
+    plt.title("Precision Recall Curve for Random Forest")
+    plt.savefig(dest+"/BestRandomForest_PrecisionCurve.jpg")
+    plt.clf();
+    
+    y_pred = best_RFC.predict_proba(X_test)[:,1]
+    fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label='ROC curve (AUC ={0:.2f})'.format(roc_auc))
+    plt.title("ROC for Best Random Forest model on Test data")
+    plt.xlabel("FPR")
+    plt.ylabel("TPR (recall)")
 
+    default_threshold = np.argmin(np.abs(thresholds - 0.5))
+    plt.plot(
+        fpr[default_threshold],
+        tpr[default_threshold],
+        "or",
+        markersize=10,
+        label="threshold 0.5",
+    )
+    plt.legend(loc="best")
+    plt.savefig(dest+"/BestRandomForest_ROC.jpg")
+    plt.clf();
+    
+    # Save model
+    pickle.dump(best_RFC, open(dest+"/Best_RFC.rds", "wb"))    
     print("")
 
 
@@ -209,6 +245,17 @@ def main(train_data, test_data, dest):
                                           )
     random_search_LR.fit(X_train, y_train);
 
+    # Save C vs Accuracy plot
+    search_df = pd.DataFrame(random_search_LR.cv_results_).sort_values(by="param_LR__C", ascending=True)
+    plt.plot(search_df["param_LR__C"], search_df["mean_test_accuracy"], label="validation")
+    plt.plot(search_df["param_LR__C"], search_df["mean_train_accuracy"], label="train")
+    plt.legend()
+    plt.xlabel("C")
+    plt.ylabel("Accuracy")
+    plt.title('Logistic Regression C vs Accuracy')
+    plt.savefig(dest+'/Log_Reg_C_vs_Accuracy.png')
+    plt.clf();
+
     print("Best hyperparameter values: ", random_search_LR.best_params_)
     print(f"Best f1 score: {random_search_LR.best_score_:0.3f}")
 
@@ -228,24 +275,57 @@ def main(train_data, test_data, dest):
     best_LR_CV_results.to_csv(dest+"/BestLogisticsRegression_result.csv")
 
     print('Refit on full Train dataset')
-    best_lr_params = {key.replace('LR__',''):val for (key, val) in random_search_LR.best_params_.items()}
-    best_lr_params['random_state']=123
-    best_lr_params['max_iter']=1000
+    best_LR_params = {key.replace('LR__',''):val for (key, val) in random_search_LR.best_params_.items()}
+    best_LR_params['random_state']=123
+    best_LR_params['max_iter']=1000
 
-    best_lr = Pipeline([
+    best_LR = Pipeline([
         ('preprocessor',preprocessor), 
-        ('LR',LogisticRegression(**best_lr_params))
+        ('LR',LogisticRegression(**best_LR_params))
     ])
     
-    best_lr.fit(X_train, y_train)
+    best_LR.fit(X_train, y_train)
+    
+    print('Output Confusion Matrix')
+    y_pred = best_LR.predict(X_train)
+    best_LR_train_con_mat = plot_confusion_mat(y_train, y_pred,'Logistics Regression on Train Data').get_figure()
+    best_LR_train_con_mat.savefig(dest+"/BestLogisticsRegression_ConMat_Train.jpg")
+    plt.clf();
+    
+    y_pred = best_LR.predict(X_test)
+    best_LR_test_con_mat = plot_confusion_mat(y_test, y_pred,'Logistics Regression on Test Data').get_figure()
+    best_LR_test_con_mat.savefig(dest+"/BestLogisticsRegression_ConMat_Test.jpg")
+    plt.clf();
+    
+    print('Output Precision and ROC curves')
+    PrecisionRecallDisplay.from_estimator(best_LR, X_test, y_test)
+    plt.title("Precision Recall Curve for Logistic Regression")
+    plt.savefig(dest+"/BestLogisticsRegression_PrecisionCurve.jpg")
+    plt.clf();
+    
+    y_pred = best_RFC.predict_proba(X_test)[:,1]
+    fpr, tpr, thresholds = roc_curve(y_test, y_pred)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label='ROC curve (AUC ={0:.2f})'.format(roc_auc))
+    plt.title("ROC for Best Logistic Regression model on Test data")
+    plt.xlabel("FPR")
+    plt.ylabel("TPR (recall)")
 
-    y_pred = best_lr.predict(X_train)
-    best_lr_train_con_mat = plot_confusion_mat(y_train, y_pred,'Logistics Regression on Train Data').get_figure()
-    best_lr_train_con_mat.savefig(dest+"/BestLogisticsRegression_ConMat_Train.jpg")
-
-    y_pred = best_lr.predict(X_test)
-    best_lr_test_con_mat = plot_confusion_mat(y_test, y_pred,'Logistics Regression on Test Data').get_figure()
-    best_lr_test_con_mat.savefig(dest+"/BestLogisticsRegression_ConMat_Test.jpg")
+    default_threshold = np.argmin(np.abs(thresholds - 0.5))
+    plt.plot(
+        fpr[default_threshold],
+        tpr[default_threshold],
+        "or",
+        markersize=10,
+        label="threshold 0.5",
+    )
+    plt.legend(loc="best")
+    plt.savefig(dest+"/BestLogisticsRegression_ROC.jpg")
+    plt.clf();
+    
+    # Save model
+    pickle.dump(best_LR, open(dest+"/Best_LR.rds", "wb"))    
+    print("")
 
     print('Fetch Logistics Regression Coefficients')
 
@@ -259,9 +339,9 @@ def main(train_data, test_data, dest):
         numeric_features + categorical_features_ohe
     )
     
-    lr_coefs = pd.DataFrame(data=best_lr[1].coef_[0], index=new_columns, columns=["Coefficient"])
+    lr_coefs = pd.DataFrame(data=best_LR[1].coef_[0], index=new_columns, columns=["Coefficient"])
     lr_coefs.to_csv(dest+"/BestLogisticsRegression_Coefficients.csv")
-    
+        
 
 def build_pipeline(numeric_features, categorical_features, binary_features,drop_features,target):
     numeric_transformer = make_pipeline(
