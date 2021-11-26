@@ -1,6 +1,6 @@
 # Bank Marketing Prediction
 
-  - contributors: Melisa Maidana, Steven Lio, Zheren Xu
+  - Contributors: Melisa Maidana, Steven Lio, Zheren Xu
 	
 Group data analysis project for DSCI 522 (Data Science Workflows); 
 A course in the 2021 Master of Data Science program at the University of 
@@ -49,13 +49,9 @@ After file download run the following to process dataset (for a 80%/20% train/te
 
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
-Generate EDA boxplot figure:
+Generate EDA tables and figures:
 
-    python src/eda_boxplot.py data/processed/processedbank-additional-train.csv results/boxplot_target_vs_age.png
-
-Generate EDA barchart figure:
-
-    python src/eda_barchart.py data/processed/processedbank-additional-train.csv results/barchart_by_marital.png
+    python src/eda.py data/processed/processedbank-additional-train.csv results/eda
 
 Training with logistic regression model:
 
