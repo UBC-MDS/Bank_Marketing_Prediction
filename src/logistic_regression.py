@@ -11,26 +11,23 @@ Options:
 <train_src>                                     Path for the training data
 <test_src>                                      Path for the testing data
 <dest>                                          Path for the destination of result
-
-Example:
-python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 '''
 
 from get_valid_score import mean_std_cross_val_scores
-# import numpy as np
 import pandas as pd
-# from scipy.stats import loguniform
 from sklearn.pipeline import make_pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.compose import make_column_transformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.linear_model import LogisticRegression
 from docopt import docopt
-from sklearn.metrics import make_scorer
-from sklearn.model_selection import cross_validate
+import os, os.path
+import errno
+
 opt = docopt(__doc__)
 
 def main(train_data, test_data, dest):
+    mkdir_p(dest)
     # Split X and y
     train_df = pd.read_csv(train_data)
     test_df = pd.read_csv(test_data)
@@ -54,7 +51,7 @@ def main(train_data, test_data, dest):
     result_df = result_df[['score', 'Logistic Regression']]
 
     # Save the result as a csv file
-    result_df.to_csv("logistic_regression_result.csv", index=False)
+    result_df.to_csv(dest+"/logistic_regression_result.csv", index=False)
 
 
 def bulid_pipeline():
@@ -99,6 +96,14 @@ def bulid_pipeline():
     return make_pipeline(
         preprocessor, LogisticRegression(max_iter=1000, random_state=123, C=27.655298)
     )
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else: raise
 
 if __name__ == "__main__":
     main(opt["<train_src>"], opt["<test_src>"], opt["<dest>"])
