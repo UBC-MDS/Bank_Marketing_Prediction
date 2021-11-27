@@ -14,11 +14,11 @@ The possibility to predict the likelihood of customer response can lead to more 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
-and build a machine learning model that can predict if a certain customer looks alike the target audience for this product.
+and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
 
 ## Data
 
-The data set used in this project is related with direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
+The data set used in this project is related to direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
 
 ## Report
 
