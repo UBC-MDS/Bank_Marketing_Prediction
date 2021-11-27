@@ -23,11 +23,11 @@ The possibility to predict the likelihood of customer response can lead to more 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
-and build a machine learning model that can predict if a certain customer looks alike the target audience for this product.
+and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
 
 ## Data
 
-The data set used in this project is related with direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
+The data set used in this project is related to direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
 
 The data set contains 20 features, plus the desired target. 
 Each row contains information of one client, including personal and banking attributes, 
@@ -53,21 +53,20 @@ knitr::include_graphics("../results/eda_boxplot_by_age.png")
 ```
 
 ## Model building and selection
-Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions:
+Model building process has been carried out in Python 3.9 with the [`scikit-learn`](https://scikit-learn.org/stable/) library. Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions:
 
   * 5-fold [cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) results were used for model evaluation
-  * accuracy, f1-score, recall rate, and precision were the metrics selected for model evaluation
-  * model building process has been carried out in Python 3.9 with the [`scikit-learn`](https://scikit-learn.org/stable/) library
+  * Accuracy, f1-score, recall rate, and precision were the metrics selected for model evaluation.
   * Preprocessing of training data:
     - Data was randomized and split based on 80% for training and 20% for testing.
     - All features can be classified into categorical or numeric features. No features were dropped.
-    - Missing numeric values are filled using median. Missing values in categorical features are filled as "missing".
+    - Missing numeric values are filled using the median. Missing values in categorical features are filled as "missing".
     - All numeric features are scaled using the mean and variance (Standardization)
     - All categorical features are transformed with One-Hot Encoding.
   * Parameters and hyper-parameters tuning.
     - To speed up the training process and ensure reproducibility, the value of `n_jobs` is set to `-1` and `random_state` to `123`.
-    - The hyper-parameters are tuned by `RandomizedSearchCV` and the optimal parameter values are chosen based on f1-score.
-    - The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using highest frequency).
+    - The hyper-parameters are tuned by `RandomizedSearchCV` and the optimal parameter values are chosen based on the f1-score.
+    - The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using the highest frequency).
 
 ### Random Forest Classifier:
 The best hyper-parameters for the Random Forest are:
@@ -93,7 +92,7 @@ tibble(Accuracy="82.9%",
   kbl(caption = "Table 3. Best Random Forest Classifier model scores on validation set:") %>%
   kable_classic(full_width = F, html_font = "Cambria")
 ```
-Random Forest Classifiers trained with the best parameters from hyper-parameter optimization gives relatively decent scores on the prediction on validation data. Even though
+Random Forest Classifiers trained with the best parameters from hyper-parameter optimization give relatively decent scores on the prediction on validation data. Even though
 precision is low, it achieved an excellent recall score.
 
 ### Logistic Regression:
@@ -149,7 +148,7 @@ ggplot(lr_coeff[1:10,], aes(x=Coefficient, y=reorder(Feature, Coefficient), fill
 
 As shown in Figure 4, `duration` and `month_mar` have the highest coefficient 
 value in the final model. `duration` corresponds to the duration of the call in seconds and 
-`month_mar` corresponds to customer whose last contact date occurred during March. 
+`month_mar` corresponds to the customer whose last contact date occurred during March. 
 We can also see that the campaign achieved better response rates in August and October.
 
 `poutcome_success` indicates previous success with marketing campaign and is tied to the 
@@ -159,7 +158,7 @@ idea that a customer that accepted a telemarketing offer in the past may be more
 Finally another interesting feature is `cons.price.idx`, which shows up as 
 the 3rd more important variable learned by the model. The Consumer Price Index is a quarterly
 updated variable that indicates the changes in prices as experienced by consumers. 
-When this index is high, then customers may be more open to switch to a new product
+When this index is high, then customers may be more open to switching to a new product
 for a better price. Even though this may lower the revenue per customer, it still may be
 a desired objective for other reasons, such as customer retention. 
 
@@ -169,23 +168,23 @@ a desired objective for other reasons, such as customer retention.
 Many of the most important features identified by the model, such as the month of contact 
 or the duration of the call, are unknown for customers that had no record of previous interactions with the bank. 
 However, once this information has been collected the prediction becomes very accurate.
-Moreover, we believe that including the reason of last contact in the data gathering process would 
+Moreover, we believe that including the reason for the last contact in the data gathering process would 
 add valuable information and increase the accuracy of the model.
 
-Lastly, we lack of context on the campaign schedule and other environment variables, 
+Lastly, we lack context on the campaign schedule and other environment variables, 
 so at this point we cannot make any inferences regarding the months with better success rates.
 
 
 ### Conclusions
 
 Overall the model has stable accuracy and recall rate. Hence with the correct
-variables, the model can identify those who will be likely to response to the telemarketing
+variables, the model can identify those who will be likely to respond to the telemarketing
 campaign. 
-Some additional features, such as reason of last contact, could bring additional value to the model
+Some additional features, such as the reason for the last contact, could bring additional value to the model
 and improve the False Positive rate.
 
 The model developed provides flexibility to prioritize the customers by likelihood of success 
-until we reach a desired target or budget. Although, we also recommend to assign weight to the customers
+until we reach a desired target or budget. Although, we also recommend assigning weight to the customers
 based on their banking/personal profile. 
 This categorization should be defined by the bank and 
 must be aligned with the objective of the particular campaign. 
