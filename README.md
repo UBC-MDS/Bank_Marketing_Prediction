@@ -54,7 +54,7 @@ this project after cloning the GitHub repository to your machine.
 
     python src/eda.py data/processed/bank-additional-train.csv results/eda
 
-#### 4\. Script to build model (Dummy Classifier, Random Forest, Logistics Regression):
+#### 4\. Script to build model (Dummy Classifier, Random Forest, Logistic Regression):
 
     python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
 

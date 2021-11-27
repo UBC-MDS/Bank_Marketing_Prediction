@@ -27,8 +27,6 @@ to identify the best features that can help predict the customer response.
 Our objective is to build a machine learning model that can predict if a certain customer 
 looks alike the target audience for this product.
 
-## Methods
-
 ### Data
 
 The data set used in this project is related with direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
@@ -55,7 +53,7 @@ knitr::kable(summary,
 knitr::include_graphics("../results/eda_boxplot_by_age.png")
 ```
 
-### Model building
+#### Model building
 Our group chooses to use logistic regression model and random forest model to train the predictor and select the better model according to the accuracy/f1-score/recall/precision of the model.
 
 - Preprocessing of training data:
@@ -68,8 +66,69 @@ Our group chooses to use logistic regression model and random forest model to tr
   - The hyperparameters of both models are tuned by `RandomizedSearchCV` and the optimal values are selected.
 - The baseline accuracy of the model is 0.888 (obtained from the dummy model).
 
-### Analysis
+### Analysis and Results Discussion
+From the results above, we conclude the Logistic Regression model will be 
+the best for predicting customer response to the telemarketing campaign. 
+Logistics Regression also provides the ability to interpret the different features
+that drives the prediction when we assess the coefficient of the final model.
 
-## Results & Discussion
+
+```{r load_coef_table, echo=FALSE, include = FALSE}
+lr_coeff <- read_csv("../results/BestLogisticRegression_Coefficients.csv") %>% arrange(desc(Coefficient))
+colnames(lr_coeff) <- c("Feature","Coefficient")
+lr_coeff
+```
+```{r coeff_barplot, echo=FALSE, fig.cap="Figure 2. Top 10 Coefficients from Logistics Regression Model", out.width = '60%'}
+ggplot(lr_coeff[1:10,], aes(x=Coefficient, y=reorder(Feature, Coefficient), fill=Coefficient)) +
+  geom_bar(stat="identity", show.legend = FALSE) +
+  geom_text(aes(label=round(Coefficient,2)), hjust = 1.3, color="white", size=5.0) +
+  theme_classic() +
+  labs(x="Features",
+       y="Coefficient Values",
+       title="Top 10 Coefficients") +
+  theme(plot.title=element_text(hjust=0.5, face="bold"),
+        axis.title.x=element_text(face="bold"),
+        axis.title.y=element_text(face="bold"))
+```
+
+We can see from the graph that `duration` and `month_mar` has the highest coefficient 
+value in the final model. `duration` corresponding to the duration in seconds and 
+`month_mar` is the date from last contact with the bank in March. Although both 
+variables may not available for new customer or someone who never contacted the 
+bank. But if a customer did contact the bank, which means he/she may open to be 
+contacted by telemarketer. What is missing here may be the reason of last contact.
+Since if the customer contact the bank is to complains then calling them again to 
+sell product may not be a good idea. The reason why it is March is not known here, 
+but maybe the program ran in March usually was really good. We also see that August
+and October is also one of the best period for the campaign response.
+
+It is interesting to see `cons.price.idx` and `poutcome_success` shows up as the 
+3rd and 4th important variable. `cons.price.idx`(Consumer Price Index) a quarterly
+updated variable indicates the changes in prices as experienced by consumers, which
+can tells us when the changes is higher, customer may want to switch to a new product
+for a better price. This may not be good for a revenue perspective since we may ended
+up lowering our revenue per customer, but it will for sure help with customer retention.
+`poutcome_success` indicates previous success with marketing campaign. Which make 
+sense since if a customer accepted the offer he/she may accept a new one again.
+
+To optimize effective telemarketing campaign, the bank can prioritize on those who 
+contacted the bank previous, and those who accepted previous campaign offer but not
+anyone. Those who accepted previous campaign offer for certain time ago and make sure
+to further classify them into different revenue bucket to maximize campaign ROI.
+
+March, August, October are the best period historically for high campaign success.
+Also those who are retired (lot's of saving) and students (price conscious) are two
+key groups to go after.
+
+Overall the model has a very stable accuracy and recall rate. Hence with the correct
+variables, the model can identify those who will likely to to response to the telemarketing
+campaign. We also do see our best model have a higher False Positive rate hence it may
+predicted some who may response but actually haven't. We can explore more variables
+such as reason of last contact and the tenure of the customer with the bank. As 
+new customer or those who complains a lot probably won't response to the campaign.
+
+The other benefit about Logistic Regression is that we can further prioritize the 
+customers by contacting those who receive a higher probability of will response until
+we reach the campaign target and budget.
 
 # References

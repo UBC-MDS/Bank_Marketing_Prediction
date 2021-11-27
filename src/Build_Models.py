@@ -225,7 +225,7 @@ def main(train_data, test_data, dest):
     print("")
 
 
-    print('Randomized Search CV for Logistics Regression')
+    print('Randomized Search CV for Logistic Regression')
     param_grid = { 
         'LR__C' : loguniform(1e-3, 50),
         'LR__class_weight' : ["balanced", None],
@@ -261,7 +261,7 @@ def main(train_data, test_data, dest):
     print("Best hyperparameter values: ", random_search_LR.best_params_)
     print(f"Best f1 score: {random_search_LR.best_score_:0.3f}")
 
-    print('Output Logistics Regression CV results')
+    print('Output Logistic Regression CV results')
     best_LR_CV_results = pd.DataFrame(random_search_LR.cv_results_)[[
     'mean_fit_time', 'std_fit_time', 'mean_score_time', 'std_score_time',
            'params',
@@ -274,7 +274,7 @@ def main(train_data, test_data, dest):
            'mean_test_recall', 'std_test_recall','rank_test_recall', 
            'mean_test_precision','std_test_precision', 'rank_test_precision',
     ]].set_index("rank_test_f1").sort_index()
-    best_LR_CV_results.to_csv(dest+"/BestLogisticsRegression_result.csv")
+    best_LR_CV_results.to_csv(dest+"/BestLogisticRegression_result.csv")
 
     print('Refit on full Train dataset')
     best_LR_params = {key.replace('LR__',''):val for (key, val) in random_search_LR.best_params_.items()}
@@ -290,19 +290,19 @@ def main(train_data, test_data, dest):
     
     print('Output Confusion Matrix')
     y_pred = best_LR.predict(X_train)
-    best_LR_train_con_mat = plot_confusion_mat(y_train, y_pred,'Logistics Regression on Train Data').get_figure()
-    best_LR_train_con_mat.savefig(dest+"/BestLogisticsRegression_ConMat_Train.jpg")
+    best_LR_train_con_mat = plot_confusion_mat(y_train, y_pred,'Logistic Regression on Train Data').get_figure()
+    best_LR_train_con_mat.savefig(dest+"/BestLogisticRegression_ConMat_Train.jpg")
     plt.clf();
     
     y_pred = best_LR.predict(X_test)
-    best_LR_test_con_mat = plot_confusion_mat(y_test, y_pred,'Logistics Regression on Test Data').get_figure()
-    best_LR_test_con_mat.savefig(dest+"/BestLogisticsRegression_ConMat_Test.jpg")
+    best_LR_test_con_mat = plot_confusion_mat(y_test, y_pred,'Logistic Regression on Test Data').get_figure()
+    best_LR_test_con_mat.savefig(dest+"/BestLogisticRegression_ConMat_Test.jpg")
     plt.clf();
     
     print('Output Precision and ROC curves')
     PrecisionRecallDisplay.from_estimator(best_LR, X_test, y_test)
     plt.title("Precision Recall Curve for Logistic Regression")
-    plt.savefig(dest+"/BestLogisticsRegression_PrecisionCurve.jpg")
+    plt.savefig(dest+"/BestLogisticRegression_PrecisionCurve.jpg")
     plt.clf();
     
     y_pred = best_RFC.predict_proba(X_test)[:,1]
@@ -322,14 +322,14 @@ def main(train_data, test_data, dest):
         label="threshold 0.5",
     )
     plt.legend(loc="best")
-    plt.savefig(dest+"/BestLogisticsRegression_ROC.jpg")
+    plt.savefig(dest+"/BestLogisticRegression_ROC.jpg")
     plt.clf();
     
     # Save model
     pickle.dump(best_LR, open(dest+"/Best_LR.rds", "wb"))    
     print("")
 
-    print('Fetch Logistics Regression Coefficients')
+    print('Fetch Logistic Regression Coefficients')
 
     categorical_features_ohe = list(
         preprocessor.named_transformers_["pipeline-2"]
@@ -342,7 +342,7 @@ def main(train_data, test_data, dest):
     )
     
     lr_coefs = pd.DataFrame(data=best_LR[1].coef_[0], index=new_columns, columns=["Coefficient"])
-    lr_coefs.to_csv(dest+"/BestLogisticsRegression_Coefficients.csv")
+    lr_coefs.to_csv(dest+"/BestLogisticRegression_Coefficients.csv")
         
 
 def build_pipeline(numeric_features, categorical_features, binary_features,drop_features,target):
