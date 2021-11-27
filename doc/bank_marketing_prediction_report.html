@@ -274,7 +274,6 @@ Figure 1. Distribution of customer response per age.
 </div>
 <div id="model-building-and-selection" class="section level2">
 <h2>Model building and selection</h2>
-
 <p>Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions:</p>
 <ul>
 <li>5-fold <a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">cross-validation</a> results were used for model evaluation</li>
@@ -284,7 +283,7 @@ Figure 1. Distribution of customer response per age.
 <ul>
 <li>Data was randomized and split based on 80% for training and 20% for testing.</li>
 <li>All features can be classified into categorical or numeric features. No features were dropped.</li>
-<li>Missing numeric values are filled using median. Missing values in categorical features are filled as “missing.”</li>
+<li>Missing numeric values are filled using median. Missing values in categorical features are filled as “missing”.</li>
 <li>All numeric features are scaled using the mean and variance (Standardization)</li>
 <li>All categorical features are transformed with One-Hot Encoding.</li>
 </ul></li>
@@ -295,7 +294,6 @@ Figure 1. Distribution of customer response per age.
 <li>The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using highest frequency).</li>
 </ul></li>
 </ul>
-
 <div id="random-forest-classifier" class="section level3">
 <h3>Random Forest Classifier:</h3>
 <p>The best hyper-parameters for the Random Forest are:</p>
@@ -470,7 +468,7 @@ Figure 4. Top 10 Coefficients from Logistics Regression Model
 </p>
 </div>
 <p>As shown in Figure 4, <code>duration</code> and <code>month_mar</code> have the highest coefficient value in the final model. <code>duration</code> corresponds to the duration of the call in seconds and <code>month_mar</code> corresponds to customer whose last contact date occurred during March. We can also see that the campaign achieved better response rates in August and October.</p>
-<p><code>poutcome_success</code> indicates previous success with marketing campaign and is tied to the idea that a customer that accepted a telemarking offer in the past may be more likely to accept a new one again.</p>
+<p><code>poutcome_success</code> indicates previous success with marketing campaign and is tied to the idea that a customer that accepted a telemarketing offer in the past may be more likely to accept a new one again.</p>
 <p>Finally another interesting feature is <code>cons.price.idx</code>, which shows up as the 3rd more important variable learned by the model. The Consumer Price Index is a quarterly updated variable that indicates the changes in prices as experienced by consumers. When this index is high, then customers may be more open to switch to a new product for a better price. Even though this may lower the revenue per customer, it still may be a desired objective for other reasons, such as customer retention.</p>
 <div id="limitations" class="section level3">
 <h3>Limitations</h3>
