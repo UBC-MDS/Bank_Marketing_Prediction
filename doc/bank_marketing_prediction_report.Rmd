@@ -58,13 +58,16 @@ Two models, Random Forest Classifier and Logistic Regression, have been trained 
   * 5-fold [cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) results were used for model evaluation
   * accuracy, f1-score, recall rate, and precision were the metrics selected for model evaluation
   * model building process has been carried out in Python 3.9 with the [`scikit-learn`](https://scikit-learn.org/stable/) library
-  * Preprocessing of training data:
+  *Preprocessing of training data:
+  
     - Data was randomized and split based on 80% for training and 20% for testing.
     - All features can be classified into categorical or numeric features. No features were dropped.
     - Missing numeric values are filled using median. Missing values in categorical features are filled as "missing".
     - All numeric features are scaled using the mean and variance (Standardization)
     - All categorical features are transformed with One-Hot Encoding.
-  * Parameters and hyper-parameters tuning.
+
+  *Parameters and hyper-parameters tuning.
+
     - To speed up the training process and ensure reproducibility, the value of `n_jobs` is set to `-1` and `random_state` to `123`.
     - The hyper-parameters are tuned by `RandomizedSearchCV` and the optimal parameter values are chosen based on f1-score.
     - The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using highest frequency).
