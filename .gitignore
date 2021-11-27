@@ -4,3 +4,6 @@
 .DS_Store?
 .Rhistory
 __MACOSX
+.ipynb_checkpoints
+.virtual_documents
+__pycache__
