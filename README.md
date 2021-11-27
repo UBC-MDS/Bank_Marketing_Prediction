@@ -33,6 +33,10 @@ assess the overperformance of the final model using the testing dataset. Summary
 statistics and appropriate visualization as well as the whole model building process
 will be provided and included as part of the final report for this project.
 
+## Report
+
+The final report can be found [here](https://htmlpreview.github.io/?https://github.com/UBC-MDS/Bank_Marketing_Prediction/blob/main/doc/bank_marketing_prediction_report.html)
+
 
 ## Usage
 
