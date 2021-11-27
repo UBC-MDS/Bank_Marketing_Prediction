@@ -81,6 +81,7 @@ this project after cloning the GitHub repository to your machine.
 		- knitr=1.33
 		- tidyverse=1.3.1
 		- ggplot2=3.3.5
+		- kableExtra=1.3.4
 
 ## License
 
