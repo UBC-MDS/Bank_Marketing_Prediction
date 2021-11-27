@@ -12,6 +12,7 @@ bibliography: bank_marketing_refs.bib
 knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(knitr)
+library(kableExtra)
 ```
 
 ## Introduction
@@ -27,7 +28,7 @@ to identify the best features that can help predict the customer response.
 Our objective is to build a machine learning model that can predict if a certain customer 
 looks alike the target audience for this product.
 
-### Data
+## Data
 
 The data set used in this project is related with direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
 
@@ -45,28 +46,94 @@ summary <- summary |>  # remove first column (index)
 ```
 
 ```{r eda_class_imbalance, echo=FALSE}
-knitr::kable(summary, 
-      caption = "Table 1. Summary of examples per customer response in the dataset. Class imbalance is observed. ")
+summary %>%
+  kbl(caption = "Table 1. Summary of examples per customer response in the dataset. Class imbalance is observed.") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
 ```
 
-```{r eda_boxplot, echo=FALSE, fig.cap="Figure 1. Distribution of customer response per age.", out.width = '60%'}
+```{r eda_boxplot, fig.align = 'center', echo=FALSE, fig.cap="Figure 1. Distribution of customer response per age.", out.width = '60%'}
 knitr::include_graphics("../results/eda_boxplot_by_age.png")
 ```
 
-#### Model building
-Our group chooses to use logistic regression model and random forest model to train the predictor and select the better model according to the accuracy/f1-score/recall/precision of the model.
+## Model building
+For the studies, Random Forest Classifier and Logistic regression model were trained using 80% of the 
+data, the 20% of the data were used for validation of the model performance. For each model, a 5-fold 
+[cross-validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics)) is conducted and a randomized
+search algorithm is used for hyper-parameter tuning for each model and f1-score is used for the scoring metric. 
+
+The model is compared based on the Accuracy/f1-score/recall rate/precision.
+- All process is done in Python 3.9 and the machine learning library [`scikit-learn`](https://scikit-learn.org/stable/) is used
+for the processing and model building.
 
 - Preprocessing of training data:
-  - All the features in the data are classified into categorical features and numeric features according to the data type.
-  - The `SimpleImputer` is used to impute all missing values. Numeric features are filled according to the median, while missing values in categorical features are filled as "missing".
-  - The `StandardScaler` is used for all numeric features to ensure that all features have the same weight before training.
-  - The categorical features are encoded by `OneHotEncoder`.
-- Parameters and hyperparameters.
-  - To speed up the training process and the replicability of the training process, the value of `n_jobs` is set to `-1` and `random_state` to `123`.
-  - The hyperparameters of both models are tuned by `RandomizedSearchCV` and the optimal values are selected.
-- The baseline accuracy of the model is 0.888 (obtained from the dummy model).
+  - Data were randomized and split based on 80% for training and 20% for testing.
+  - All features are used in the models and can be classified into categorical features and numeric features.
+  - Missing numeric values are filled using median, while missing values in categorical features are filled as "missing".
+  - All numeric features are scaled using the mean and variance (Standardization) to ensure that all features have the same weight before training.
+  - Categorical features are encoded as dummy variables.
+  
+- Parameters and hyper-parameters tuning.
+  - To speed up the training process and ensure the training process to be reproducible, the value of `n_jobs` is set to `-1` and `random_state` to `123`.
+  - The hyper-parameters for both models are tuned by `RandomizedSearchCV` and the optimal parameter values are chosen based on f1-score.
 
-### Analysis and Results Discussion
+- The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using highest frequency).
+
+### Random Forest Classifier:
+The best hyper-parameters for the Random Forest are:
+```{r Load_RFC_params, echo=FALSE, include=FALSE}
+RFC_BestParams <- read_csv("../results/RFC_BestParams.csv")
+RFC_BestParams <- RFC_BestParams %>% select(-1) 
+```
+```{r RFC_params, echo=FALSE}
+RFC_BestParams %>%
+  kbl(caption = "Table 2. Best hyper-parameters for Random Forest Classifier.") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+```{r conmat_RFC, echo=FALSE, fig.align = 'center', fig.cap="Figure 2. Confusion matrix for Random Forest Classifier on Test data", out.width = '60%'}
+knitr::include_graphics("../results/BestRandomForest_ConMat_Test.jpg")
+```
+
+```{r RFC_scores, echo=FALSE}
+tibble(Accuracy="82.9%",
+       Precision="39.7%",
+       Recall="96.4%",
+       f1="56.2%") %>%
+  kbl(caption = "Table 3. The best model on predicting test data scores:") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+The best parameters gives a decent scores on the prediction on test data. We do
+see the model is not as precise but it can accuratly recall the success response.
+
+### Logistic Regression:
+```{r Load_LR_params, echo=FALSE, include=FALSE}
+LR_BestParams <- read_csv("../results/LR_BestParams.csv")
+LR_BestParams <- LR_BestParams %>% select(-1) 
+```
+```{r LR_params, echo=FALSE}
+LR_BestParams %>%
+  kbl(caption = "Table 4. Best hyper-parameters for Logistic Regression Classifier.") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+
+```{r conmat_LR, echo=FALSE, fig.align = 'center', fig.cap="Figure 3. Confusion matrix for Logistic Regression on Test data", out.width = '60%'}
+knitr::include_graphics("../results/BestLogisticRegression_ConMat_Test.jpg")
+```
+
+```{r LR_scores, echo=FALSE}
+tibble(Accuracy="86.1%",
+       Precision="44.6%",
+       Recall="90.3%",
+       f1="59.7%") %>%
+  kbl(caption = "Table 5. The best model on predicting test data scores:") %>%
+  kable_classic(full_width = F, html_font = "Cambria")
+```
+Logistic Regression overall perform better than Random Forest Classifier and it
+provides a good interpretable results as we assess the coefficient later hence it
+is more preferable than Random Forest Classifier.
+
+
+## Analysis and Results Discussion
 From the results above, we conclude the Logistic Regression model will be 
 the best for predicting customer response to the telemarketing campaign. 
 Logistics Regression also provides the ability to interpret the different features
@@ -78,7 +145,7 @@ lr_coeff <- read_csv("../results/BestLogisticRegression_Coefficients.csv") %>% a
 colnames(lr_coeff) <- c("Feature","Coefficient")
 lr_coeff
 ```
-```{r coeff_barplot, echo=FALSE, fig.cap="Figure 2. Top 10 Coefficients from Logistics Regression Model", out.width = '60%'}
+```{r coeff_barplot, echo=FALSE, fig.align = 'center', fig.cap="Figure 4. Top 10 Coefficients from Logistics Regression Model", out.width = '60%'}
 ggplot(lr_coeff[1:10,], aes(x=Coefficient, y=reorder(Feature, Coefficient), fill=Coefficient)) +
   geom_bar(stat="identity", show.legend = FALSE) +
   geom_text(aes(label=round(Coefficient,2)), hjust = 1.3, color="white", size=5.0) +
@@ -131,4 +198,4 @@ The other benefit about Logistic Regression is that we can further prioritize th
 customers by contacting those who receive a higher probability of will response until
 we reach the campaign target and budget.
 
-# References
+## References

@@ -173,6 +173,7 @@ def main(train_data, test_data, dest):
 
     print('Refit on full Train dataset')
     best_RFC_params = {key.replace('RFC__',''):val for (key, val) in random_search_RFC.best_params_.items()}
+    pd.DataFrame(best_RFC_params, index=["Best"]).to_csv(dest+"/RFC_BestParams.csv")
     best_RFC_params['random_state']=123
     best_RFC_params['n_jobs']=-1
 
@@ -278,6 +279,7 @@ def main(train_data, test_data, dest):
 
     print('Refit on full Train dataset')
     best_LR_params = {key.replace('LR__',''):val for (key, val) in random_search_LR.best_params_.items()}
+    pd.DataFrame(best_LR_params, index=["Best"]).to_csv(dest+"/LR_BestParams.csv")
     best_LR_params['random_state']=123
     best_LR_params['max_iter']=1000
 
