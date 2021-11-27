@@ -274,7 +274,28 @@ Figure 1. Distribution of customer response per age.
 </div>
 <div id="model-building-and-selection" class="section level2">
 <h2>Model building and selection</h2>
-<p>Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions: * 5-fold <a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">cross-validation</a> results were used for model evaluation * accuracy, f1-score, recall rate, and precision were the metrics selected for model evaluation * model building process has been carried out in Python 3.9 with the <a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> library <em>Preprocessing of training data: - Data was randomized and split based on 80% for training and 20% for testing. - All features can be classified into categorical or numeric features. No features were dropped. - Missing numeric values are filled using median. Missing values in categorical features are filled as “missing”. - All numeric features are scaled using the mean and variance (Standardization) - All categorical features are transformed with One-Hot Encoding. </em>Parameters and hyper-parameters tuning. - To speed up the training process and ensure reproducibility, the value of <code>n_jobs</code> is set to <code>-1</code> and <code>random_state</code> to <code>123</code>. - The hyper-parameters are tuned by <code>RandomizedSearchCV</code> and the optimal parameter values are chosen based on f1-score. - The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using highest frequency).</p>
+
+<p>Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions:</p>
+<ul>
+<li>5-fold <a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)">cross-validation</a> results were used for model evaluation</li>
+<li>accuracy, f1-score, recall rate, and precision were the metrics selected for model evaluation</li>
+<li>model building process has been carried out in Python 3.9 with the <a href="https://scikit-learn.org/stable/"><code>scikit-learn</code></a> library</li>
+<li>Preprocessing of training data:
+<ul>
+<li>Data was randomized and split based on 80% for training and 20% for testing.</li>
+<li>All features can be classified into categorical or numeric features. No features were dropped.</li>
+<li>Missing numeric values are filled using median. Missing values in categorical features are filled as “missing.”</li>
+<li>All numeric features are scaled using the mean and variance (Standardization)</li>
+<li>All categorical features are transformed with One-Hot Encoding.</li>
+</ul></li>
+<li>Parameters and hyper-parameters tuning.
+<ul>
+<li>To speed up the training process and ensure reproducibility, the value of <code>n_jobs</code> is set to <code>-1</code> and <code>random_state</code> to <code>123</code>.</li>
+<li>The hyper-parameters are tuned by <code>RandomizedSearchCV</code> and the optimal parameter values are chosen based on f1-score.</li>
+<li>The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using highest frequency).</li>
+</ul></li>
+</ul>
+
 <div id="random-forest-classifier" class="section level3">
 <h3>Random Forest Classifier:</h3>
 <p>The best hyper-parameters for the Random Forest are:</p>
