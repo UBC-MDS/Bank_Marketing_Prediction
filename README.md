@@ -75,5 +75,5 @@ under the MIT License found [here](https://github.com/stevenlio88/IMDB_Rating_Pr
 
 ## References
 
-This dataset is public available for research. The details are described in [@moro2014data] 
+This dataset is public available for research. The details are described in [@moro2014data](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
 
