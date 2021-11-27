@@ -55,6 +55,19 @@ knitr::kable(summary,
 knitr::include_graphics("../results/eda_boxplot_by_age.png")
 ```
 
+### Model building
+Our group chooses to use logistic regression model and random forest model to train the predictor and select the better model according to the accuracy/f1-score/recall/precision of the model.
+
+- Preprocessing of training data:
+  - All the features in the data are classified into categorical features and numeric features according to the data type.
+  - The `SimpleImputer` is used to impute all missing values. Numeric features are filled according to the median, while missing values in categorical features are filled as "missing".
+  - The `StandardScaler` is used for all numeric features to ensure that all features have the same weight before training.
+  - The categorical features are encoded by `OneHotEncoder`.
+- Parameters and hyperparameters.
+  - To speed up the training process and the replicability of the training process, the value of `n_jobs` is set to `-1` and `random_state` to `123`.
+  - The hyperparameters of both models are tuned by `RandomizedSearchCV` and the optimal values are selected.
+- The baseline accuracy of the model is 0.888 (obtained from the dummy model).
+
 ### Analysis
 
 ## Results & Discussion
