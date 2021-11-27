@@ -67,20 +67,20 @@ this project after cloning the GitHub repository to your machine.
 	- Python 3.9.0 and Python packages:
 		- docopt==0.6.2
 		- ipykernel
-		- requests>=2.24.0
-		- matplotlib>=3.2.2
+		- requests>=2.25.1
+		- matplotlib>=3.4.2
 		- pandas>=1.3.*
 		- scikit-learn>=1.0
-		- altair
-		- wikipedia
-		- seaborn
+		- altair>=4.1.0
+		- seaborn>=0.11.2
 		- errno
 		- zipfile
-		- altair_saver
+		- altair_saver>=0.5
 		- vega-lite vega-cli canvas
 	- R version 3.6.1 and R packages:
-		- knitr=1.26
-		- tidyverse=1.3.0
+		- knitr=1.33
+		- tidyverse=1.3.1
+		- ggplot2=3.3.5
 
 ## License
 
