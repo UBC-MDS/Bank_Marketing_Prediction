@@ -65,7 +65,7 @@ def barchart_by_marital(df, path):
             title="Distribution of Marital Status of customers who suscribed to new product)",
         )
         .mark_bar()
-        .encode(y=alt.Y("marital", title="Marital Status"), x="count()")
+        .encode(y=alt.Y("marital:N", title="Marital Status"), x="count():Q")
     ).properties(width=350, height=150).save(
         path + "_barchart_by_marital.png", scale_factor=3
     )
@@ -91,9 +91,9 @@ def boxplot_by_age(df, path):
         alt.Chart(df, title="Distribution of Customer Response by Age")
         .mark_boxplot()
         .encode(
-            x=alt.X("age", scale=alt.Scale(zero=False), title="Age"),
-            y=alt.Y("y", title="Customer response"),
-            color=alt.Color("y", legend=None),
+            x=alt.X("age:Q", scale=alt.Scale(zero=False), title="Age"),
+            y=alt.Y("y:N", title="Customer response"),
+            color=alt.Color("y:N", legend=None),
             size="count()",
         )
     ).properties(width=350, height=150).save(
