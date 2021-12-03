@@ -41,7 +41,7 @@ def table_class_imbalance(df, path):
       summary.columns = ["Customer Response","Count","Percentage"]
       summary.to_csv(path + "_summary_table.csv")
     except Exception as ex:
-        print("Something went wrong2!")
+        print("Something went wrong creating summary table!")
 
 
 def barchart_by_marital(df, path):
@@ -127,7 +127,7 @@ def main(data, path):
         barchart_by_marital(df[df["y"] == 1], path)
         print("Saved barchart in " + path)
     except Exception as ex:
-        print("Something went wrong!", ex)
+        print("Something went wrong with the output files!", ex)
 
 
 if __name__ == "__main__":
