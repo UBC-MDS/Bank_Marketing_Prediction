@@ -1,7 +1,7 @@
 # author: Melisa Maidana, Steven Lio, Zheren Xu
 # date: 2021-12-02
 
-#This script generates all the documents for the Bank Marketing prediction project
+#This script retrieve data from source and generates all files and model for the Bank Marketing prediction project
 
 #Usage: make all
 

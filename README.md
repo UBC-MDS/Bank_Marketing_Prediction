@@ -13,6 +13,8 @@ The possibility to predict the likelihood of customer response can lead to more 
 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
+i.e. Which customers will likely to response to the telemarketing campaign when contacted over the phone and also what type of customers the bank should prioritize on? 
+
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
 and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
 

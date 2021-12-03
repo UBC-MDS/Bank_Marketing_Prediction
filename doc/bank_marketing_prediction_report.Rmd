@@ -22,6 +22,8 @@ The possibility to predict the likelihood of customer response can lead to more 
 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
+i.e. Which customers will likely to response to the telemarketing campaign when contacted over the phone and also what type of customers the bank should prioritize on? 
+
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
 and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
 
@@ -48,9 +50,14 @@ summary %>%
   kable_classic(full_width = F, html_font = "Cambria")
 ```
 
+Class imbalance is observed in the target class, it will be decided in hyper-parameter tuning in the next session to see
+if balancing the class will leads to better model.
+
 ```{r eda_boxplot, fig.align = 'center', echo=FALSE, fig.cap="Figure 1. Distribution of customer response per age.", out.width = '60%'}
 knitr::include_graphics("../results/eda_boxplot_by_age.png")
 ```
+
+
 
 ## Model building and selection
 Model building process has been carried out in Python 3.9 with the [`scikit-learn`](https://scikit-learn.org/stable/) library. Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions:
