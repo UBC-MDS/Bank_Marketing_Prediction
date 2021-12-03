@@ -22,6 +22,8 @@ The possibility to predict the likelihood of customer response can lead to more 
 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
+i.e. Which customers will likely to response to the telemarketing campaign when contacted over the phone and also what type of customers the bank should prioritize on? 
+
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
 and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
 
@@ -34,7 +36,7 @@ Each row contains information of one client, including personal and banking attr
 and data related to the past interactions with the telemarketer.
 
 The data set presents class imbalance, since only about 11% of the records are targeted as positive
-(meaning that the customer responded to the telemarketing offer).
+(meaning that the customer responded to the telemarketing offer i.e. `yes` and else `no` in the target column `y`).
 
 ```{r load_eda_table, echo=FALSE, include = FALSE}
 summary <- read_csv("../results/eda_summary_table.csv")
@@ -48,9 +50,14 @@ summary %>%
   kable_classic(full_width = F, html_font = "Cambria")
 ```
 
+Class imbalance is observed in the target class, it will be decided in hyper-parameter tuning in the next session to see
+if balancing the class will leads to better model.
+
 ```{r eda_boxplot, fig.align = 'center', echo=FALSE, fig.cap="Figure 1. Distribution of customer response per age.", out.width = '60%'}
 knitr::include_graphics("../results/eda_boxplot_by_age.png")
 ```
+
+
 
 ## Model building and selection
 Model building process has been carried out in Python 3.9 with the [`scikit-learn`](https://scikit-learn.org/stable/) library. Two models, Random Forest Classifier and Logistic Regression, have been trained under the following conditions:
@@ -138,8 +145,8 @@ ggplot(lr_coeff[1:10,], aes(x=Coefficient, y=reorder(Feature, Coefficient), fill
   geom_bar(stat="identity", show.legend = FALSE) +
   geom_text(aes(label=round(Coefficient,2)), hjust = 1.3, color="white", size=5.0) +
   theme_classic() +
-  labs(x="Features",
-       y="Coefficient Values",
+  labs(x="Coefficient Values",
+       y="Features",
        title="Top 10 Coefficients") +
   theme(plot.title=element_text(hjust=0.5, face="bold"),
         axis.title.x=element_text(face="bold"),

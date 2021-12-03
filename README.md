@@ -13,6 +13,8 @@ The possibility to predict the likelihood of customer response can lead to more 
 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
+i.e. Which customers will likely to response to the telemarketing campaign when contacted over the phone and also what type of customers the bank should prioritize on? 
+
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
 and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
 
@@ -43,6 +45,18 @@ this project after cloning the GitHub repository locally.
 
     # Build model (Dummy Classifier, Random Forest, Logistic Regression):
     python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
+
+Or
+
+After cloning this GitHub repository and install all necessary dependencies listed below, run the following command in the 
+command prompt/terminal from the root directory of this project to replicate the full analysis and final report:
+
+	make all
+
+To reset the repo to the original state, and delete all results files and report, run the following command at the command
+prompt/terminal from the root directory of this project:
+
+	make clean
 
 ## Dependencies
 	

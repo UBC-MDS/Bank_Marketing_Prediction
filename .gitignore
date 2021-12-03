@@ -7,3 +7,4 @@ __MACOSX
 .ipynb_checkpoints
 .virtual_documents
 __pycache__
+geckodriver.log
