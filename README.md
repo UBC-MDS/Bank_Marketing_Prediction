@@ -44,6 +44,18 @@ this project after cloning the GitHub repository locally.
     # Build model (Dummy Classifier, Random Forest, Logistic Regression):
     python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
 
+Or
+
+After cloning this GitHub repository and install all necessary dependencies listed below, run the following command in the 
+command prompt/terminal from the root directory of this project to replicate the full analysis and final report:
+
+	make all
+
+To reset the repo to the original state, and delete all results files and report, run the following command at the command
+prompt/terminal from the root directory of this project:
+
+	make clean
+
 ## Dependencies
 	
 	- Python 3.9.0 and Python packages:
