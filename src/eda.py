@@ -59,17 +59,19 @@ def barchart_by_marital(df, path):
     -------
     None
     """
-    (
-        alt.Chart(
-            df,
-            title="Distribution of Marital Status of customers who suscribed to new product)",
-        )
-        .mark_bar()
-        .encode(y=alt.Y("marital:N", title="Marital Status"), x="count():Q")
-    ).properties(width=350, height=150).save(
+    alt.Chart(
+        df,
+        title="Distribution of Marital Status of customers who suscribed to new product)",
+    ).mark_bar().encode(
+        y=alt.Y("marital:O", title="Marital Status"),
+        x=alt.X("count:Q", scale=alt.Scale(domain=(0, 2100)))
+    ).transform_aggregate(
+        count='count()',
+        groupby=["marital"]
+    ).properties(width=350, height=150
+    ).save(
         path + "_barchart_by_marital.png", scale_factor=3
     )
-  
   
   
 def boxplot_by_age(df, path):
@@ -122,10 +124,10 @@ def main(data, path):
         print("Saved table in " + path)
         boxplot_by_age(df, path)
         print("Saved boxplot in " + path)
-        barchart_by_marital(df[df["y"] == "yes"], path)
+        barchart_by_marital(df[df["y"] == 1], path)
         print("Saved barchart in " + path)
     except Exception as ex:
-        print("Something went wrong!")
+        print("Something went wrong!", ex)
 
 
 if __name__ == "__main__":
