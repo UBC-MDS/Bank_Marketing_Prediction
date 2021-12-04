@@ -36,6 +36,19 @@ def main(url, path):
 
 
 def mkdir_p(path):
+    """
+    Creates a new directory in the given path. If the directory already exists it does nothing.
+
+    Parameters
+    ----------
+    path : pd.string
+        the path of the new directory
+        
+    Returns
+    -------
+    None 
+    
+    """
     try:
         os.makedirs(path)
     except OSError as exc:
