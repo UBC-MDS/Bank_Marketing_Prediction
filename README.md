@@ -6,7 +6,7 @@ Group data analysis project for DSCI 522 (Data Science Workflows);
 A course in the 2021 Master of Data Science program at the University of 
 British Columbia.
 
-## Introduction
+## About
 
 Telemarketing campaigns can be very expensive to institutions. 
 The possibility to predict the likelihood of customer response can lead to more efficient strategies that reduce implementation costs and maximize the success rate.
@@ -15,8 +15,13 @@ The objective of this project is to identify which customers are more likely
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
 Specifically, if a customer is contacted over the phone, will they subscribe to the new product being offered? 
 
-To address the predictive question posed above, we plan to conduct an exploratory data analysis 
-and build a machine learning model that can predict if a certain customer would subscribe to the new product.
+To address the predictive question posed above, we conducted an exploratory data analysis 
+and built a machine learning model to predict if a certain customer would subscribe to the new product.
+Our final classifier was a Logistic Regression model that achieved an F1 score of 59.7% and a recall of 90%. 
+The features identified as more important were related to the duration of the call, the month of contact, 
+the past reaction of the customer to previous calls, and the Consumer Price Index.
+We believe that some additional features, such as the reason for the last contact, could bring additional value to the model
+and help to improve its precision and False Positive rate.
 
 ## Data
 
