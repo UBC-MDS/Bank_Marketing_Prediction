@@ -13,10 +13,10 @@ The possibility to predict the likelihood of customer response can lead to more 
 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
-i.e. Which customers will likely to response to the telemarketing campaign when contacted over the phone and also what type of customers the bank should prioritize on? 
+Specifically, if a customer is contacted over the phone, will they subscribe to the new product being offered? 
 
 To address the predictive question posed above, we plan to conduct an exploratory data analysis 
-and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
+and build a machine learning model that can predict if a certain customer would subscribe to the new product.
 
 ## Data
 
@@ -34,7 +34,7 @@ GitHub repository.
 Please run the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository locally.
 
-    # Script to download Banking dataset:
+    # Download Banking dataset from source unzip and save it to data/raw:
     python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip --path=data/raw
 	
     # Run preprocessor script (will create a 80%/20% train/test split):
@@ -46,17 +46,20 @@ this project after cloning the GitHub repository locally.
     # Build model (Dummy Classifier, Random Forest, Logistic Regression):
     python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
 
+    # Render the final report in Rmarkdown and html file
+    Rscript -e "rmarkdown::render('doc/bank_marketing_prediction_report.Rmd')"
+
 Or
 
 After cloning this GitHub repository and install all necessary dependencies listed below, run the following command in the 
 command prompt/terminal from the root directory of this project to replicate the full analysis and final report:
 
-	make all
+    `make all`
 
-To reset the repo to the original state, and delete all results files and report, run the following command at the command
+To reset the repo to the original state and delete all results files and report, run the following command at the command
 prompt/terminal from the root directory of this project:
 
-	make clean
+    `make clean`
 
 ## Dependencies
 	
@@ -85,7 +88,7 @@ The data set used in this Banking Marketing Prediction project is released by UC
 Detail of this dataset can be found [here](http://archive.ics.uci.edu/ml/datasets/Bank+Marketing). 
 
 The Banking Marketing Prediction materials (excluding original data set) here are licensed
-under the MIT License found [here](https://github.com/stevenlio88/IMDB_Rating_Prediction/blob/main/LICENSE).
+under the MIT License found [here](https://github.com/UBC-MDS/Bank_Marketing_Prediction/blob/main/LICENSE).
 
 ## References
 
