@@ -17,6 +17,7 @@ Specifically, if a customer is contacted over the phone, will they subscribe to 
 
 To address the predictive question posed above, we conducted an exploratory data analysis 
 and built a machine learning model to predict if a certain customer would subscribe to the new product.
+
 Our final classifier was a Logistic Regression model that achieved an F1 score of 59.7% and a recall of 90%. 
 The features identified as more important were related to the duration of the call, the month of contact, 
 the past reaction of the customer to previous calls, and the Consumer Price Index.
