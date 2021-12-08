@@ -8,25 +8,28 @@ British Columbia.
 
 ## About
 
-Telemarketing campaigns can be very expensive to institutions. 
-The possibility to predict the likelihood of customer response can lead to more efficient strategies that reduce implementation costs and maximize the success rate.
+Telemarketing campaigns can be very expensive to institutions. The possibility to predict the 
+likelihood of customer response to a campaign can lead to more efficient strategies that reduce 
+implementation costs and maximize the success rate.
 
-The objective of this project is to identify which customers are more likely 
-to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
-Specifically, if a customer is contacted over the phone, will they subscribe to the new product being offered? 
+There are two main objectives of this project, first is to develop a predictive model which can 
+be used to identify which customers are more likely to respond positively to a telemarketing 
+campaign and subscribe to a new product (a long-term deposit) if contacted by the bank over the 
+phone.
 
-To address the predictive question posed above, we conducted an exploratory data analysis 
-and built a machine learning model to predict if a certain customer would subscribe to the new product.
+Second is to explore what can we learn from the predictive model to understand the types of customers 
+the bank should prioritize on contact and what are the limitation of the information in the data sets.
 
 Our final classifier was a Logistic Regression model that achieved an F1 score of 59.7% and a recall of 90%. 
 The features identified as more important were related to the duration of the call, the month of contact, 
 the past reaction of the customer to previous calls, and the Consumer Price Index.
-We believe that some additional features, such as the reason for the last contact, could bring additional value to the model
-and help to improve its precision and False Positive rate.
+We believe that some additional features, such as the reason for the last contact, could bring additional 
+value to the model and help to improve its precision and False Positive rate.
 
 ## Data
 
-The data set used in this project is related to direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip).
+The data set used in this project is related to direct marketing campaigns (phone calls) of a Portuguese banking institution [@moro2014data] can be found [here](http://archive.ics.uci.edu/ml/machine-learning-databases/00222).
+The detail of the dataset is documented [here](http://archive.ics.uci.edu/ml/datasets/Bank+Marketing).
 
 ## Report
 
@@ -60,12 +63,12 @@ Or
 After cloning this GitHub repository and install all necessary dependencies listed below, run the following command in the 
 command prompt/terminal from the root directory of this project to replicate the full analysis and final report:
 
-    `make all`
+    make all
 
 To reset the repo to the original state and delete all results files and report, run the following command at the command
 prompt/terminal from the root directory of this project:
 
-    `make clean`
+    make clean
 
 #### Make file dependency diagram:
 
