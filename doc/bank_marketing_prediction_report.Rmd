@@ -22,10 +22,10 @@ The possibility to predict the likelihood of customer response can lead to more 
 
 The objective of this project is to identify which customers are more likely 
 to respond positively to a telemarketing campaign and subscribe to a new product (a long-term deposit). 
-i.e. Which customers will likely to response to the telemarketing campaign when contacted over the phone and also what type of customers the bank should prioritize on? 
+Specifically, if a customer is contacted over the phone, will they subscribe to the new product being offered?
 
-To address the predictive question posed above, we plan to conduct an exploratory data analysis 
-and build a machine learning model that can predict if a certain customer looks like the target audience for this product.
+To address the predictive question posed above, we conducted an exploratory data analysis 
+and built a machine learning model to predict if a certain customer would subscribe to the new product.
 
 ## Data
 
@@ -35,28 +35,13 @@ The data set contains 20 features, plus the desired target.
 Each row contains information of one client, including personal and banking attributes, 
 and data related to the past interactions with the telemarketer.
 
-The data set presents class imbalance, since only about 11% of the records are targeted as positive
-(meaning that the customer responded to the telemarketing offer i.e. `yes` and else `no` in the target column `y`).
+The data set presents class imbalance. We will assess during hyper-parameter tuning 
+if balancing the class leads to better model.
 
-```{r load_eda_table, echo=FALSE, include = FALSE}
-summary <- read_csv("../results/eda_summary_table.csv")
-summary <- summary |>  # remove first column (index)
-    select(-1) 
+
+```{r eda_barchart, fig.align = 'center', echo=FALSE, fig.cap="Figure 1. Class imbalance is observed in the target class. Only 11% of customers reached by the telermarketing campaign accepted the subscription to a new product.", out.width = '60%'}
+knitr::include_graphics("../results/eda_barchart_by_target.png")
 ```
-
-```{r eda_class_imbalance, echo=FALSE}
-summary %>%
-  kbl(caption = "Table 1. Summary of examples per customer response in the dataset. Class imbalance is observed.") %>%
-  kable_classic(full_width = F, html_font = "Cambria")
-```
-
-Class imbalance is observed in the target class, it will be decided in hyper-parameter tuning in the next session to see
-if balancing the class will leads to better model.
-
-```{r eda_boxplot, fig.align = 'center', echo=FALSE, fig.cap="Figure 1. Distribution of customer response per age.", out.width = '60%'}
-knitr::include_graphics("../results/eda_boxplot_by_age.png")
-```
-
 
 
 ## Model building and selection
@@ -75,7 +60,7 @@ Model building process has been carried out in Python 3.9 with the [`scikit-lear
     - The hyper-parameters are tuned by `RandomizedSearchCV` and the optimal parameter values are chosen based on the f1-score.
     - The baseline accuracy of the model is 88.8% (obtained from the Dummy Classifier using the highest frequency).
 
-### Random Forest Classifier:
+### Random Forest Classifier
 The best hyper-parameters for the Random Forest are:
 ```{r Load_RFC_params, echo=FALSE, include=FALSE}
 RFC_BestParams <- read_csv("../results/RFC_BestParams.csv")
@@ -83,7 +68,7 @@ RFC_BestParams <- RFC_BestParams %>% select(-1)
 ```
 ```{r RFC_params, echo=FALSE}
 RFC_BestParams %>%
-  kbl(caption = "Table 2. Best hyper-parameters for Random Forest Classifier.") %>%
+  kbl(caption = "Table 1. Best hyper-parameters for Random Forest Classifier.") %>%
   kable_classic(full_width = F, html_font = "Cambria")
 ```
 
@@ -96,13 +81,13 @@ tibble(Accuracy="82.9%",
        Precision="39.7%",
        Recall="96.4%",
        f1="56.2%") %>%
-  kbl(caption = "Table 3. Best Random Forest Classifier model scores on validation set:") %>%
+  kbl(caption = "Table 2. Best Random Forest Classifier model scores on validation set:") %>%
   kable_classic(full_width = F, html_font = "Cambria")
 ```
 Random Forest Classifiers trained with the best parameters from hyper-parameter optimization give relatively decent scores on the prediction on validation data. Even though
 precision is low, it achieved an excellent recall score.
 
-### Logistic Regression:
+### Logistic Regression
 ```{r Load_LR_params, echo=FALSE, include=FALSE}
 LR_BestParams <- read_csv("../results/LR_BestParams.csv")
 LR_BestParams <- LR_BestParams %>% select(-1) 
@@ -172,19 +157,16 @@ a desired objective for other reasons, such as customer retention.
 
 ### Limitations
 
-Many of the most important features identified by the model, such as the month of contact 
-or the duration of the call, are unknown for customers that had no record of previous interactions with the bank. 
-However, once this information has been collected the prediction becomes very accurate.
-Moreover, we believe that including the reason for the last contact in the data gathering process would 
-add valuable information and increase the accuracy of the model.
+Even though there seems to be a better success rate on certain months, we lack of context on the campaign schedule and other environment variables, so at this point we cannot make any inferences regarding those features.
 
-Lastly, we lack context on the campaign schedule and other environment variables, 
-so at this point we cannot make any inferences regarding the months with better success rates.
+Also, we believe that capturing additional features in the data gathering process, such as the reason of last contact, 
+would add valuable information and increase the accuracy of the model.
 
+Lastly, we want to note that the model has been trained with bank customers information that were contacted at least once by the telemarketing agency. As a consequence, it cannot be used to predict the response of new customers.
 
 ### Conclusions
 
-Overall the model has stable accuracy and recall rate. Hence with the correct
+Overall the model has stable accuracy and recall rate. Hence, with the correct
 variables, the model can identify those who will be likely to respond to the telemarketing
 campaign. 
 Some additional features, such as the reason for the last contact, could bring additional value to the model

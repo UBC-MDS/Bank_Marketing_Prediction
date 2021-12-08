@@ -72,7 +72,38 @@ def barchart_by_marital(df, path):
     ).save(
         path + "_barchart_by_marital.png", scale_factor=3
     )
-  
+
+def barchart_by_target(df, path):
+    """
+    Saves barchart figure generated with df in <out_filepath>_barchart_by_target.png
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        data
+    path : string
+        the path/file prefix where output file will be saved
+
+    Returns
+    -------
+    None
+    """
+    df['response'] = "Rejected subscription"
+    df.loc[df['y']==1,'response'] = "Accepted subscription"
+    alt.Chart(
+        df,
+        title="Distribution of Customer Response",
+    ).mark_bar().encode(
+        y=alt.Y("response:N", title=""),
+        x=alt.X("count:Q", scale=alt.Scale(domain=(0, 30000)), title='Customers contacted by phone')
+    ).transform_aggregate(
+        count='count()',
+        groupby=["response"]
+    ).properties(width=400, height=100
+    ).save(
+        path + "_barchart_by_target.png", scale_factor=3
+    )
+    
   
 def boxplot_by_age(df, path):
     """
@@ -121,11 +152,10 @@ def main(data, path):
     try:
         df = pd.read_csv(data)
         table_class_imbalance(df, path)
-        print("Saved table in " + path)
         boxplot_by_age(df, path)
-        print("Saved boxplot in " + path)
         barchart_by_marital(df[df["y"] == 1], path)
-        print("Saved barchart in " + path)
+        barchart_by_target(df, path)
+        print("Saved EDA figures in " + path)
     except Exception as ex:
         print("Something went wrong with the output files!", ex)
 
