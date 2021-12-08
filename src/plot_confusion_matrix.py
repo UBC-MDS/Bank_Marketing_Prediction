@@ -45,7 +45,7 @@ def plot_confusion_mat(tar, pred, model_name):
     labels = [f'{v1}\n{v2}\n{v3}' for v1, v2, v3 in zip(flags, cnt, pct)]
 
     labels = np.asarray(labels).reshape(2,2)
-    categories = ['0', '1']
+    categories = ['Rejected subscription', 'Accepted subscription']
 
     accuracy  = np.trace(conf_mat) / float(np.sum(conf_mat))
     precision = conf_mat[1,1] / sum(conf_mat[:,1])

@@ -47,7 +47,7 @@ this project after cloning the GitHub repository locally.
     python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
     # Generate EDA tables and figures:
-    python src/eda.py data/processed/bank-additional-train.csv results/eda
+    python src/eda.py data/processed/bank-additional-train.csv results
 
     # Build model (Dummy Classifier, Random Forest, Logistic Regression):
     python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
