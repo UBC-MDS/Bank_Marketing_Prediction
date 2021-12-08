@@ -67,6 +67,8 @@ prompt/terminal from the root directory of this project:
 
     `make clean`
 
+#### Make file dependency diagram:
+
 ![dependency_diagram](Makefile.png)
 
 
