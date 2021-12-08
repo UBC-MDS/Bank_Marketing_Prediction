@@ -1,6 +1,0 @@
-score,Logistic Regression
-fit_time,0.068 (+/- 0.005)
-score_time,0.005 (+/- 0.000)
-valid_score,0.913 (+/- 0.010)
-train_score,0.916 (+/- 0.001)
-test_score,0.91

@@ -12,6 +12,8 @@ Options:
   <out_filepath>      A path/filename prefix where output files will be saved.
  (this is a required option)
 """ 
+import os, os.path
+import errno
 import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
@@ -39,7 +41,7 @@ def table_class_imbalance(df, path):
       summary = pd.DataFrame(df.groupby('y').size().reset_index(name='count'))
       summary["perc"]=(summary["count"]/summary["count"].sum()).round(3)
       summary.columns = ["Customer Response","Count","Percentage"]
-      summary.to_csv(path + "_summary_table.csv")
+      summary.to_csv(path + "/" + "eda_summary_table.csv")
     except Exception as ex:
         print("Something went wrong creating summary table!")
 
@@ -70,7 +72,7 @@ def barchart_by_marital(df, path):
         groupby=["marital"]
     ).properties(width=350, height=150
     ).save(
-        path + "_barchart_by_marital.png", scale_factor=3
+        path + "/" + "eda_barchart_by_marital.png", scale_factor=3
     )
 
 def barchart_by_target(df, path):
@@ -101,7 +103,7 @@ def barchart_by_target(df, path):
         groupby=["response"]
     ).properties(width=400, height=100
     ).save(
-        path + "_barchart_by_target.png", scale_factor=3
+        path + "/" + "eda_barchart_by_target.png", scale_factor=3
     )
     
   
@@ -130,7 +132,7 @@ def boxplot_by_age(df, path):
             size="count()",
         )
     ).properties(width=350, height=150).save(
-        path + "_boxplot_by_age.png", scale_factor=3
+        path + "/" + "eda_boxplot_by_age.png", scale_factor=3
     )  
 
 
@@ -150,6 +152,7 @@ def main(data, path):
     None
   """
     try:
+        mkdir_p(path)
         df = pd.read_csv(data)
         table_class_imbalance(df, path)
         boxplot_by_age(df, path)
@@ -159,6 +162,26 @@ def main(data, path):
     except Exception as ex:
         print("Something went wrong with the output files!", ex)
 
+def mkdir_p(path):
+    """
+    Creates a new directory in the given path. If the directory already exists it does nothing.
+
+    Parameters
+    ----------
+    path : pd.string
+        the path of the new directory
+        
+    Returns
+    -------
+    None 
+    
+    """
+    try:
+        os.makedirs(path)
+    except OSError as exc:
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else: raise
 
 if __name__ == "__main__":
     main(opt["<train>"], opt["<out_filepath>"])
