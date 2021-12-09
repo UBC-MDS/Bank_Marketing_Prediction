@@ -17,7 +17,6 @@ import errno
 import pandas as pd
 import matplotlib.pyplot as plt
 import altair as alt
-import altair_saver
 from docopt import docopt
 opt = docopt(__doc__)
 
