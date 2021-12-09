@@ -1,0 +1,22 @@
+﻿Attribute,Type,Data Type,Description
+age,Input,Numeric,Age
+job ,Input,Categorical,Occupation
+marital ,Input,Categorical,Marital status
+education,Input,Categorical,Education Level
+default,Input,Categorical,Has credit in default?
+housing,Input,Categorical,Has housing loan?
+loan,Input,Categorical,Has personal loan?
+contact,Input,Categorical,Contact communication type
+month,Input,Categorical,Last contact month of year
+day_of_week,Input,Categorical,Last contact day of the week
+duration,Input,Numeric,"Last contact duration, in seconds"
+campaign,Input,Numeric,Number of contacts performed during this campaign and for this client
+pdays,Input,Numeric,Number of days that passed by after the client was last contacted from a previous campaign
+previous,Input,Numeric,Number of contacts performed before this campaign and for this client
+poutcome,Input,Categorical,Outcome of the previous marketing campaign
+emp.var.rate,Input,Numeric,Employment variation rate
+cons.price.idx,Input,Numeric,Consumer price index
+cons.conf.idx,Input,Numeric,Consumer confidence index
+euribor3m,Input,Numeric,Euribor 3 month rate - daily indicator
+nr.employed,Input,Numeric,Number of employees - quarterly indicator
+y,Target,Binary,Has the client subscribed a term deposit?

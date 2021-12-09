@@ -40,28 +40,28 @@ The final report can be found [here](https://htmlpreview.github.io/?https://gith
 
 To replicate the analysis, all relevant data, scripts and necessary dependencies are available in this
 GitHub repository. 
+
+
 Please run the following commands at the command line/terminal from the root directory of
 this project after cloning the GitHub repository locally.
 
-    # Download Banking dataset from source unzip and save it to data/raw:
-    python src/downloader.py http://archive.ics.uci.edu/ml/machine-learning-databases/00222/bank-additional.zip --path=data/raw
-	
-    # Run preprocessor script (will create a 80%/20% train/test split):
-    python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
+1. Using Docker
 
-    # Generate EDA tables and figures:
-    python src/eda.py data/processed/bank-additional-train.csv results
+To replicate this analysis, you should download and install [Docker](https://www.docker.com/get-started). Then clone this 
+GitHub repository and run the following command in the command prompt/terminal from the root directory of this project:
 
-    # Build model (Dummy Classifier, Random Forest, Logistic Regression):
-    python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
+	docker run --rm -v PATH_ON_YOUR_COMPUTER:/Bank_Marketing_Prediction ****/Bank_Marketing_Prediction make -C /Bank_Marketing_Prediction all
 
-    # Render the final report in Rmarkdown and html file
-    Rscript -e "rmarkdown::render('doc/bank_marketing_prediction_report.Rmd')"
+To reset the repo to the original clean state, run the following command in the command prompt/terminal from the root
+directory of this project:
 
-Or
+	docker run --rm -v 
 
-After cloning this GitHub repository and install all necessary dependencies listed below, run the following command in the 
-command prompt/terminal from the root directory of this project to replicate the full analysis and final report:
+2. Without using Docker PATH_ON_YOUR_COMPUTER:/Bank_Marketing_Prediction ****/Bank_Marketing_Prediction make -C /Bank_Marketing_Prediction clean 
+
+You can also replicate the analysis in this project by cloning this GitHub repository and install all necessary dependencies 
+listed below, run the following command in the command prompt/terminal from the root directory of this project to replicate 
+the full analysis and final report:
 
     make all
 

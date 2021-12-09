@@ -16,15 +16,15 @@ data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv
 	python src/data_preprocessing.py data/raw/bank-additional/bank-additional-full.csv data/processed --test_split=0.2
 
 # Generate EDA tables and figures for the final report:
-results/eda_barchart_by_marital.png results/eda_boxplot_by_age.png results/eda_summary_table.csv : data/processed/bank-additional-train.csv
+results/eda_barchart_by_target.png : data/processed/bank-additional-train.csv
 	python src/eda.py data/processed/bank-additional-train.csv results
 
 # Train and find best hyper-parameters for Random Forest and Logistic Regression models and output summary graphs and tables:
-results/DummyClassifier_result.csv results/DummyClassifier_ConMat.jpg results/BestRandomForest_result.csv results/RFC_BestParams.csv results/BestRandomForest_ConMat_Train.jpg results/BestRandomForest_ConMat_Test.jpg results/BestRandomForest_PrecisionCurve.jpg results/BestRandomForest_ROC.jpg results/Best_RFC.rds results/Log_Reg_C_vs_Accuracy.png results/BestLogisticRegression_result.csv results/LR_BestParams.csv results/BestLogisticRegression_ConMat_Train.jpg results/BestLogisticRegression_ConMat_Test.jpg results/BestLogisticRegression_PrecisionCurve.jpg results/BestLogisticRegression_ROC.jpg results/Best_LR.rds results/BestLogisticRegression_Coefficients.csv : data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv
+results/RFC_BestParams.csv results/BestRandomForest_ConMat_Test.jpg results/LR_BestParams.csv results/BestLogisticRegression_ConMat_Test.jpg results/BestLogisticRegression_Coefficients.csv : data/processed/bank-additional-train.csv data/processed/bank-additional-test.csv
 	python src/Build_Models.py data/processed/bank-additional-test.csv data/processed/bank-additional-train.csv results
 
 # Render the final report in Rmarkdown and html file
-doc/bank_marketing_prediction_report.html doc/bank_marketing_prediction_report.md: doc/bank_marketing_prediction_report.Rmd doc/bank_marketing_refs.bib results/eda_barchart_by_marital.png results/eda_boxplot_by_age.png results/eda_summary_table.csv results/DummyClassifier_result.csv results/DummyClassifier_ConMat.jpg results/BestRandomForest_result.csv results/RFC_BestParams.csv results/BestRandomForest_ConMat_Train.jpg results/BestRandomForest_ConMat_Test.jpg results/BestRandomForest_PrecisionCurve.jpg results/BestRandomForest_ROC.jpg results/Best_RFC.rds results/Log_Reg_C_vs_Accuracy.png results/BestLogisticRegression_result.csv results/LR_BestParams.csv results/BestLogisticRegression_ConMat_Train.jpg results/BestLogisticRegression_ConMat_Test.jpg results/BestLogisticRegression_PrecisionCurve.jpg results/BestLogisticRegression_ROC.jpg results/Best_LR.rds results/BestLogisticRegression_Coefficients.csv
+doc/bank_marketing_prediction_report.html doc/bank_marketing_prediction_report.md: doc/bank_marketing_prediction_report.Rmd doc/bank_marketing_refs.bib doc/Attribute_Info.csv results/eda_barchart_by_target.png results/RFC_BestParams.csv results/BestRandomForest_ConMat_Test.jpg results/LR_BestParams.csv
 	Rscript -e "rmarkdown::render('doc/bank_marketing_prediction_report.Rmd')"
 	
 clean:
