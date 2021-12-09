@@ -1,0 +1,33 @@
+digraph G {
+n2[label="all", color="red"];
+n12[label="data/processed/bank-additional-test.csv", color="red"];
+n8[label="data/processed/bank-additional-train.csv", color="red"];
+n9[label="data/raw/bank-additional/bank-additional-full.csv", color="green"];
+n6[label="doc/Attribute_Info.csv", color="green"];
+n4[label="doc/bank_marketing_prediction_report.Rmd", color="green"];
+n3[label="doc/bank_marketing_prediction_report.md", color="red"];
+n5[label="doc/bank_marketing_refs.bib", color="green"];
+n13[label="results/BestRandomForest_ConMat_Test.jpg", color="red"];
+n14[label="results/LR_BestParams.csv", color="red"];
+n11[label="results/RFC_BestParams.csv", color="red"];
+n7[label="results/eda_barchart_by_target.png", color="red"];
+n10[label="src/downloader.py", color="green"];
+n3 -> n2 ; 
+n9 -> n12 ; 
+n9 -> n8 ; 
+n10 -> n9 ; 
+n6 -> n3 ; 
+n4 -> n3 ; 
+n5 -> n3 ; 
+n13 -> n3 ; 
+n14 -> n3 ; 
+n11 -> n3 ; 
+n7 -> n3 ; 
+n12 -> n13 ; 
+n8 -> n13 ; 
+n12 -> n14 ; 
+n8 -> n14 ; 
+n12 -> n11 ; 
+n8 -> n11 ; 
+n8 -> n7 ; 
+}
