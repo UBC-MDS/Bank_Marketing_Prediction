@@ -39,11 +39,9 @@ The final report can be found [here](https://htmlpreview.github.io/?https://gith
 ## Usage
 
 To replicate the analysis, all relevant data, scripts and necessary dependencies are available in this
-GitHub repository. 
-
-
-Please run the following commands at the command line/terminal from the root directory of
-this project after cloning the GitHub repository locally.
+GitHub repository and you can use either [Docker](https://www.docker.com/get-started) or run the makefile
+commands in the command line/terminal at the root of this project directory after cloning this GitHub 
+repository locally. 
 
 1. Using Docker
 
@@ -55,9 +53,9 @@ GitHub repository and run the following command in the command prompt/terminal f
 To reset the repo to the original clean state, run the following command in the command prompt/terminal from the root
 directory of this project:
 
-	docker run --rm -v 
+	docker run --rm -v PATH_ON_YOUR_COMPUTER:/Bank_Marketing_Prediction ****/Bank_Marketing_Prediction make -C /Bank_Marketing_Prediction clean 
 
-2. Without using Docker PATH_ON_YOUR_COMPUTER:/Bank_Marketing_Prediction ****/Bank_Marketing_Prediction make -C /Bank_Marketing_Prediction clean 
+2. Using make command 
 
 You can also replicate the analysis in this project by cloning this GitHub repository and install all necessary dependencies 
 listed below, run the following command in the command prompt/terminal from the root directory of this project to replicate 
