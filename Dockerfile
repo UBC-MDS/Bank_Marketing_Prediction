@@ -63,18 +63,14 @@ RUN mamba install --quiet --yes \
 
 RUN apt-get update && apt-get install -y chromium-chromedriver
 RUN conda install -c conda-forge altair_saver
-RUN npm install -g --force vega-lite vega-cli canvas vega --unsafe-perm=true
+
+# Install pandoc by conda (or M1 Mac would got an error)
+RUN conda install -c conda-forge pandoc
 
 
 USER ${NB_UID}
 
 WORKDIR "${HOME}"
-
-# Example usage:
-# docker build --tag v0.1.0 /$(pwd)
-# docker run --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work v0.1.0
-
-# docker build --platform --tag v0.1.0 /$(pwd)
 
 
 
