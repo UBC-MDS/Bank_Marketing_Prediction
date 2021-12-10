@@ -5,7 +5,14 @@
 #Date: 2021-12-09
 
 # use jupyter/scipy-notebook:latest as the base image
-FROM jupyter/scipy-notebook:latest
+ARG BASE_CONTAINER=jupyter/scipy-notebook:latest
+FROM $BASE_CONTAINER
+
+USER root
+
+RUN apt-get update
+
+USER $NB_UID
 
 USER root
 
@@ -68,9 +75,6 @@ WORKDIR "${HOME}"
 # docker run --rm -p 8888:8888 -e JUPYTER_ENABLE_LAB=yes -v "${PWD}":/home/jovyan/work v0.1.0
 
 # docker build --platform --tag v0.1.0 /$(pwd)
-
-
-
 
 
 
