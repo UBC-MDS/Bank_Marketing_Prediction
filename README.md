@@ -48,12 +48,12 @@ repository locally.
 To replicate this analysis, you should download and install [Docker](https://www.docker.com/get-started). Then clone this 
 GitHub repository and run the following command in the command prompt/terminal from the root directory of this project:
 
-	docker run --rm -v PATH_ON_YOUR_COMPUTER:/Bank_Marketing_Prediction ****/Bank_Marketing_Prediction make -C /Bank_Marketing_Prediction all
+	docker run --rm -v PATH_ON_YOUR_COMPUTER:/home/bank_marketing_prediction ****/Bank_Marketing_Prediction make -C '/home/bank_marketing_prediction' all
 
 To reset the repo to the original clean state, run the following command in the command prompt/terminal from the root
 directory of this project:
 
-	docker run --rm -v PATH_ON_YOUR_COMPUTER:/Bank_Marketing_Prediction ****/Bank_Marketing_Prediction make -C /Bank_Marketing_Prediction clean 
+	docker run --rm -v PATH_ON_YOUR_COMPUTER:/home/bank_marketing_prediction ****/Bank_Marketing_Prediction make -C '/home/bank_marketing_prediction' clean 
 
 2. Using make command 
 
