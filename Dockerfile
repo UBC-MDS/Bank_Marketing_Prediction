@@ -16,7 +16,7 @@ USER $NB_UID
 
 USER root
 
-# R pre-requisites
+# Pre-requisites files for R
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
     fonts-dejavu \
@@ -27,14 +27,14 @@ RUN apt-get update --yes && \
     gcc && \
     apt-get clean && rm -rf /var/lib/apt/lists/*  
 
-# R packages including IRKernel which gets installed globally.
+# use mamba to install base R.
 RUN mamba install --quiet --yes \
     'r-base' \
     'r-devtools' \
     'r-irkernel' && \
     mamba clean --all -f -y
 
-# These packages are not easy to install under arm
+# Other R packages install through mamba.
 RUN set -x && \
     arch=$(uname -m) && \
     if [ "${arch}" == "x86_64" ]; then \
@@ -44,24 +44,20 @@ RUN set -x && \
             'r-tidyverse' && \
             mamba clean --all -f -y; \
     fi;
-
-
-# # install the kableExtra package using install.packages
+# install kableExtra for R
 RUN Rscript -e "install.packages('kableExtra',repos = 'http://cran.us.r-project.org')"
 
-# install the anaconda distribution of python
-# Install Python 3 packages
+# Install Python packages
 RUN mamba install --quiet --yes \
     'ipykernel' \
     'ipython>=7.15' \
     'pip' \
-    'selenium' \
     'scikit-learn>=1.0' \
     'docopt' \
     'pandas>=1.3.*'&& \
     mamba clean --all -f -y 
 
-RUN apt-get update && apt-get install -y chromium-chromedriver
+#RUN apt-get update && apt-get install -y chromium-chromedriver
 RUN conda install -c conda-forge altair_saver
 
 # Install pandoc by conda (or M1 Mac would got an error)
