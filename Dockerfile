@@ -10,21 +10,10 @@ FROM $BASE_CONTAINER
 
 USER root
 
-RUN apt-get update
-
-USER $NB_UID
-
-USER root
-
 # Pre-requisites files for R
 RUN apt-get update --yes && \
     apt-get install --yes --no-install-recommends \
-    fonts-dejavu \
-    unixodbc \
-    unixodbc-dev \
-    r-cran-rodbc \
-    gfortran \
-    gcc && \
+    fonts-dejavu && \
     apt-get clean && rm -rf /var/lib/apt/lists/*  
 
 # use mamba to install base R.
@@ -40,7 +29,6 @@ RUN set -x && \
     if [ "${arch}" == "x86_64" ]; then \
         mamba install --quiet --yes \
             'r-rmarkdown' \
-            'r-tidymodels' \
             'r-tidyverse' && \
             mamba clean --all -f -y; \
     fi;
@@ -51,31 +39,14 @@ RUN Rscript -e "install.packages('kableExtra',repos = 'http://cran.us.r-project.
 RUN mamba install --quiet --yes \
     'ipykernel' \
     'ipython>=7.15' \
-    'pip' \
     'scikit-learn>=1.0' \
     'docopt' \
     'pandas>=1.3.*'&& \
     mamba clean --all -f -y 
 
-#RUN apt-get update && apt-get install -y chromium-chromedriver
-RUN conda install -c conda-forge altair_saver
-
 # Install pandoc by conda (or M1 Mac would got an error)
 RUN conda install -c conda-forge pandoc
-
 
 USER ${NB_UID}
 
 WORKDIR "${HOME}"
-
-
-
-
-
-
-
-
-
-
-
-
