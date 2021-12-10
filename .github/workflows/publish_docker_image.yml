@@ -1,4 +1,4 @@
-# Git Action
+# Git Action!
 name: Publish Dockerfile on DockerHub
 on: 
   push: 
