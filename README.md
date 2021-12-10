@@ -54,6 +54,8 @@ To reset the repo to the original clean state, run the following command in the 
 directory of this project:
 
 	docker run --rm -v PATH_ON_YOUR_COMPUTER:/home/bank_marketing_prediction ****/Bank_Marketing_Prediction make -C '/home/bank_marketing_prediction' clean 
+	
+For M1 Mac, add `--platform linux/amd64` for both `build` and `run`
 
 2. Using make command 
 
