@@ -47,8 +47,10 @@ repository locally.
 
 To replicate this analysis, you should download and install [Docker](https://www.docker.com/get-started). Then clone this 
 GitHub repository and run the following command in the command prompt/terminal from the root directory of this project:
-	
-	docker build --tag bank_prediction .
+
+	docker build --tag bank_prediction
+
+Then, 
 
 	docker run --rm -it -v PATH_ON_YOUR_COMPUTER:/home/bank_prediction bank_prediction make -C /home/bank_prediction all
 
