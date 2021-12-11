@@ -52,12 +52,12 @@ GitHub repository and run the following command in the command prompt/terminal f
 
 Then, 
 
-	docker run --rm -it -v PATH_ON_YOUR_COMPUTER:/home/bank_prediction bank_prediction make -C /home/bank_prediction all
+	docker run --rm -v PATH_ON_YOUR_COMPUTER:/home/bank_prediction bank_prediction make -C /home/bank_prediction all
 
 To reset the repo to the original clean state, run the following command in the command prompt/terminal from the root
 directory of this project:
 
-	docker run --rm -it -v PATH_ON_YOUR_COMPUTER:/home/bank_prediction bank_prediction make -C /home/bank_prediction clean
+	docker run --rm -v PATH_ON_YOUR_COMPUTER:/home/bank_prediction bank_prediction make -C /home/bank_prediction clean
 	
 For M1 Mac, add `--platform linux/amd64` for both `build` and `run`
 
